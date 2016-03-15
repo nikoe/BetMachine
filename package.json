@@ -1,0 +1,13 @@
+{
+  "name"         : "BetMachine",
+  "version"      : "0.0.1",
+  "private"      : "true",
+  "description"  : "Fantacy sports betting app with play money",
+  "main"         : "server.js",
+  "author"       : "Niko Ekberg",
+  "dependencies" : {
+    "express"    : "*",
+    "body-parser": "*",
+    "method-override": "*"
+  }
+}
