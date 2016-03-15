@@ -5,9 +5,13 @@
   "description"  : "Fantacy sports betting app with play money",
   "main"         : "server.js",
   "author"       : "Niko Ekberg",
+  "scripts"      : {
+    "start" : "node server.js"
+  },
   "dependencies" : {
     "express"    : "*",
     "body-parser": "*",
-    "method-override": "*"
+    "method-override": "*",
+    "nodemon": "*"
   }
 }
