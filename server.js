@@ -13,7 +13,7 @@ app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse applica
 app.use(methodOverride());
 
 app.get('*', function(req, res) {
-    res.sendFile('./frontend/index.html');
+    res.sendFile(__dirname + '/frontend/index.html');
 });
 
 // listen (start app with node server.js) ======================================
