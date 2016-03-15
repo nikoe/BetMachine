@@ -11,7 +11,6 @@
   "dependencies" : {
     "express"    : "*",
     "body-parser": "*",
-    "method-override": "*",
-    "nodemon": "*"
+    "method-override": "*"
   }
 }
