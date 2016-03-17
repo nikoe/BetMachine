@@ -11,6 +11,7 @@
   "dependencies" : {
     "express"    : "*",
     "body-parser": "*",
-    "method-override": "*"
+    "method-override": "*",
+    "bower" : "*"
   }
 }

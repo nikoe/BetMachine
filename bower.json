@@ -1,0 +1,11 @@
+{
+  "name": "BetMachine",
+  "version": "0.0.1",
+  "homepage": "https://github.com/nikoe/BetMachine",
+  "authors": [
+    "Niko Ekberg <niko.ekberg@gmail.com>"
+  ],
+  "dependencies": {
+    "angular": "^1.5.1"
+  }
+}
