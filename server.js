@@ -16,6 +16,13 @@ app.get('/', function(req, res) {
     res.sendFile(__dirname + '/frontend/index.html');
 });
 
+// routes ============================
+app.use('/api', require('./backend/routes'));
+
+app.use(function(req, res, next) {
+    res.status(404).end();
+});
+
 // listen (start app with node server.js) ======================================
 app.listen(app.get('port'), function() {
     console.log('Node app is running on port', app.get('port'));
