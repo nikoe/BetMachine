@@ -17,7 +17,7 @@ app.get('/', function(req, res) {
 });
 
 // routes ============================
-app.use('/api', require('./backend/routes'));
+app.use('/api', require('./backend/routes/routes'));
 
 app.use(function(req, res, next) {
     res.status(404).end();

@@ -12,6 +12,8 @@
     "express"    : "*",
     "body-parser": "*",
     "method-override": "*",
-    "bower" : "*"
+    "bower" : "*",
+    "pg" : "*",
+    "bluebird" : "*"
   }
 }

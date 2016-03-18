@@ -1,9 +1,15 @@
-var user = {
+var User = require('../models/models.js').user;
+
+var UserController = {
     index: function(req, res) {
-        res.json({
-            "helloworld": "helloworld"
-        });
+        User.findAll()
+            .then(function(result) {
+               res.json(result);
+            })
+            .catch(function(error) {
+                res.status(500).json(error);
+            });
     }
 };
 
-module.exports = user;
+module.exports = UserController;
