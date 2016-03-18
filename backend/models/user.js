@@ -17,7 +17,7 @@ module.exports = function(connectionString) {
                         done();
                         reject({ success: false, data: err});
                     } else {
-                        var query = client.query("SELECT * FROM account");
+                        var query = client.query("SELECT id, username FROM account");
 
                         // Stream results back one row at a time
                         query.on('row', function (row) {
