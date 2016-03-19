@@ -8,7 +8,7 @@ var app = angular.module('app', [
         $httpProvider.interceptors.push('TokenInterceptor');
         $routeProvider
             .when('/', {
-                controller: 'LoginController',
+                controller: 'MainController',
                 templateUrl: 'views/main.html',
                 access: {
                     requireLogin: false,
