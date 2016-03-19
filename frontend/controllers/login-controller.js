@@ -4,17 +4,18 @@
 app.controller('LoginController', ['$scope', '$window', '$location', 'UserAuthFactory', 'AuthenticationFactory',
     function ($scope, $window, $location, UserAuthFactory, AuthenticationFactory) {
         $scope.user = {
-            username: 'test',
-            password: 'test'
+            username: '',
+            password: ''
         };
 
-        $scope.error = '';
+        $scope.alerts = [];
 
         $scope.login = function () {
+            $scope.alerts = [];
             var username = $scope.user.username,
                 password = $scope.user.password;
 
-            if (username !== undefined && password !== undefined) {
+            if ((username !== undefined && username.length > 0) && (password !== undefined && password.length > 0)) {
                 UserAuthFactory.login(username, password).success(function (data) {
 
                     console.log(data);
@@ -30,11 +31,15 @@ app.controller('LoginController', ['$scope', '$window', '$location', 'UserAuthFa
                     $location.path("/");
 
                 }).error(function(status) {
-                    $scope.error = 'Invalid credentials';
+                    $scope.alerts.push({type: 'danger', msg: 'Invalid credentials'});
                 });
             } else {
-                $scope.error = 'Please type username and password and try again!';
+                $scope.alerts.push({type: 'danger', msg: 'Please type username and password and try again!'});
             }
         }
+
+        $scope.closeAlert = function(index) {
+            $scope.alerts.splice(index, 1);
+        };
     }
 ]);

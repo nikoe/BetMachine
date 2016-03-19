@@ -9,6 +9,6 @@
     "angular": "^1.5.1",
     "angular-route": "latest",
     "angular-resource": "latest",
-    "angular-bootstrap" : "latest"
+    "bootstrap": "latest"
   }
 }
