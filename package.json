@@ -1,19 +1,20 @@
 {
-  "name"         : "BetMachine",
-  "version"      : "0.0.1",
-  "private"      : "true",
-  "description"  : "Fantacy sports betting app with play money",
-  "main"         : "server.js",
-  "author"       : "Niko Ekberg",
-  "scripts"      : {
-    "start" : "node server.js"
+  "name": "BetMachine",
+  "version": "0.0.1",
+  "private": "true",
+  "description": "Fantacy sports betting app with play money",
+  "main": "server.js",
+  "author": "Niko Ekberg",
+  "scripts": {
+    "start": "nf start"
   },
-  "dependencies" : {
-    "express"    : "*",
+  "dependencies": {
+    "bluebird": "*",
     "body-parser": "*",
+    "bower": "*",
+    "express": "*",
+    "foreman": "1.4.1",
     "method-override": "*",
-    "bower" : "*",
-    "pg" : "*",
-    "bluebird" : "*"
+    "pg": "*"
   }
 }
