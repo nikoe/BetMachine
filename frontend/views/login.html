@@ -1,4 +1,4 @@
 <div ng-controller="LoginController">
-    <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+    <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
     <button ng-click="login()">Login</button>
 </div>
