@@ -2,13 +2,13 @@
  * Created by ekni on 19/03/16.
  */
 var app = angular.module('app', [
-    'ngRoute', 'ngResource'
+    'ngRoute', 'ngResource', 'ui.bootstrap'
 ]).
     config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
         $httpProvider.interceptors.push('TokenInterceptor');
         $routeProvider
             .when('/', {
-                controller: 'MainController',
+                controller: 'LoginController',
                 templateUrl: 'views/main.html',
                 access: {
                     requireLogin: false,

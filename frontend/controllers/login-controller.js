@@ -4,8 +4,8 @@
 app.controller('LoginController', ['$scope', '$window', '$location', 'UserAuthFactory', 'AuthenticationFactory',
     function ($scope, $window, $location, UserAuthFactory, AuthenticationFactory) {
         $scope.user = {
-            username: '',
-            password: ''
+            username: 'test',
+            password: 'test'
         };
 
         $scope.error = '';
@@ -16,6 +16,8 @@ app.controller('LoginController', ['$scope', '$window', '$location', 'UserAuthFa
 
             if (username !== undefined && password !== undefined) {
                 UserAuthFactory.login(username, password).success(function (data) {
+
+                    console.log(data);
 
                     AuthenticationFactory.isLogged = true;
                     AuthenticationFactory.user = data.user.username;
