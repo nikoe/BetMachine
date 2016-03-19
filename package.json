@@ -6,7 +6,7 @@
   "main": "server.js",
   "author": "Niko Ekberg",
   "scripts": {
-    "start": "nf start"
+    "start": "nf start -j Procfile_dev"
   },
   "dependencies": {
     "bluebird": "*",
