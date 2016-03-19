@@ -41,7 +41,7 @@ app.factory('UserAuthFactory', function($window, $location, $http, Authenticatio
 
 });
 
-app.factor('TokenInterceptor', function($q, $window) {
+app.factory('TokenInterceptor', function($q, $window) {
    return {
        request: function(config) {
            config.headers = config.headers || {};

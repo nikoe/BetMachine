@@ -1,7 +1,7 @@
 /**
  * Created by ekni on 19/03/16.
  */
-var app = angular.module('BetMachine', [
+var app = angular.module('app', [
     'ngRoute', 'ngResource'
 ]).
     config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {

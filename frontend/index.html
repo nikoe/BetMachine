@@ -4,15 +4,15 @@
   <meta charset="UTF-8">
   <title>BetMachine</title>
     <script src="js/angular.min.js"></script>
-    <script>
-        var app = angular.module('app', []);
-
-        app.controller("Test", function($scope) {
-            $scope.text = "BetMachine";
-        });
-    </script>
+    <script src="js/angular-route.min.js"></script>
+    <script src="js/angular-resource.min.js"></script>
+    <script src="app.js"></script>
+    <script src="factories/authentication-factory.js"></script>
+    <script src="controllers/main-controller.js"></script>
 </head>
-<body ng-controller="Test">
-    <h1>{{text}}</h1>
+<body>
+    <div class="wrapper">
+        <div ng-view></div>
+    </div>
 </body>
 </html>

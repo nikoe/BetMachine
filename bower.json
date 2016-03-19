@@ -6,6 +6,8 @@
     "Niko Ekberg <niko.ekberg@gmail.com>"
   ],
   "dependencies": {
-    "angular": "^1.5.1"
+    "angular": "^1.5.1",
+    "angular-route": "latest",
+    "angular-resource": "latest"
   }
 }
