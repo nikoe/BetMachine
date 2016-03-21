@@ -21,7 +21,6 @@ app.factory('AuthenticationFactory', function($window) {
 app.factory('UserAuthFactory', function($window, $location, $http, AuthenticationFactory) {
     return {
         login: function(username, password) {
-            console.log($location.host());
             return $http.post($location.host() + '/api/auth', {
                 username: username,
                 password: password
