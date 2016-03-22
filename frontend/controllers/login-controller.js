@@ -26,7 +26,8 @@ app.controller('LoginController', ['$scope', '$window', '$location', 'UserAuthFa
                     $window.sessionStorage.userRole = data.data.user.role;
                     $window.sessionStorage.userId = data.data.user.user_id;
 
-                    $location.path("/");
+                    $scope.user.username = '';
+                    $scope.user.password = '';
 
                 }).error(function(error) {
                     $scope.user.username = '';
