@@ -26,12 +26,11 @@ app.controller('LoginController', ['$scope', '$window', '$location', 'UserAuthFa
                     $window.sessionStorage.userRole = data.data.user.role;
                     $window.sessionStorage.userId = data.data.user.user_id;
 
-                    $scope.user.username = '';
-                    $scope.user.password = '';
-
                     $location.path("/");
 
                 }).error(function(error) {
+                    $scope.user.username = '';
+                    $scope.user.password = '';
                     AlertFactory.add('danger', error.message);
                 });
             } else {

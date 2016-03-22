@@ -12,13 +12,14 @@ app.use(bodyParser.json());                                     // parse applica
 app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
 app.use(methodOverride());
 
+// backend ============================
+app.use('/api', require('./backend/routes/routes'));
+
 // frontend ============================
-app.get('/', function(req, res) {
+app.get('/*', function(req, res) {
     res.sendFile(__dirname + '/frontend/index.html');
 });
 
-// backend ============================
-app.use('/api', require('./backend/routes/routes'));
 
 app.use(function(req, res, next) {
     res.status(404).end();

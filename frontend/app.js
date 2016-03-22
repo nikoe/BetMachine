@@ -1,43 +1,40 @@
 /**
  * Created by ekni on 19/03/16.
  */
-var app = angular.module('app', [
-    'ngRoute', 'ngResource', 'ui.bootstrap'
+var app = angular.module('app', ['ngResource', 'ui.bootstrap', 'ui.router', 'ncy-angular-breadcrumb'
 ]).
-    config(['$routeProvider', '$httpProvider', '$locationProvider', function($routeProvider, $httpProvider, $locationProvider) {
+    config(['$stateProvider', '$httpProvider', '$urlRouterProvider', '$locationProvider', function($stateProvider, $httpProvider, $urlRouterProvider, $locationProvider) {
         $httpProvider.interceptors.push('TokenInterceptor');
+
         $locationProvider.html5Mode(true);
-        $locationProvider.hashPrefix('!');
-        $routeProvider
-            .when('/', {
+
+        $stateProvider
+            .state('index', {
+                url: "/",
+                templateUrl: "views/main.html",
                 controller: 'MainController',
-                templateUrl: 'views/main.html',
-                access: {
-                    requireLogin: false,
-                    requireAdmin: false
+                ncyBreadcrumb: {
+                    label: 'Home'
                 }
             })
-            .when('/login', {
-                controller: 'LoginController',
-                templateUrl: 'views/login.html',
-                access: {
-                    requireLogin: false,
-                    requireAdmin: false
+            .state('test', {
+                url: '/test',
+                template: '<h1>Hello {{ name }}</h1>',
+                ncyBreadcrumb: {
+                    label: 'Test'
                 }
-            })
-            .otherwise({
-               redirectTo: '/'
             });
+        $urlRouterProvider.otherwise("/");
 }]);
 
-app.run(function($rootScope, $window, $location, AuthenticationFactory, AlertFactory) {
+app.run(function($rootScope, $window, $state, AuthenticationFactory, AlertFactory) {
 
     AuthenticationFactory.check();
 
-    $rootScope.$on('$routeChangeStart', function(event, nextRoute, currentRoute) {
+    $rootScope.$on('$stateChangeStart', function(event, nextState, currentState) {
         AlertFactory.clearAll();
-        if((nextRoute.access && nextRoute.access.requireLogin) && !AuthenticationFactory.isLogged) {
-            $location.path("/");
+        if((nextState.access && nextState.access.requireLogin) && !AuthenticationFactory.isLogged) {
+            $state.go('/');
         } else {
             if(!AuthenticationFactory.user) AuthenticationFactory.user = $window.sessionStorage.user;
             if(!AuthenticationFactory.userRole) AuthenticationFactory.userRole = $window.sessionStorage.userRole;
@@ -45,7 +42,8 @@ app.run(function($rootScope, $window, $location, AuthenticationFactory, AlertFac
         }
     });
 
-    $rootScope.$on('$routeChangeSuccess', function(event, nextRoute, currentRoute) {
+    $rootScope.$on('$stateChangeSuccess', function(event, nextState, currentState) {
         $rootScope.role = AuthenticationFactory.userRole;
     });
 });
+

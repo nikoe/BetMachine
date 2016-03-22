@@ -18,7 +18,7 @@ app.factory('AuthenticationFactory', function($window) {
     return auth;
 });
 
-app.factory('UserAuthFactory', function($window, $location, $http, AuthenticationFactory) {
+app.factory('UserAuthFactory', function($window, $location, $http, AuthenticationFactory, $state) {
     return {
         login: function(username, password) {
             return $http.post($location.protocol() +'://' + $location.host() + ':' + $location.port() + '/api/auth', {
@@ -37,7 +37,7 @@ app.factory('UserAuthFactory', function($window, $location, $http, Authenticatio
                 delete $window.sessionStorage.userRole;
                 delete $window.sessionStorage.userId;
 
-                $location.path("/");
+                $state.go("index");
             }
         }
     }
