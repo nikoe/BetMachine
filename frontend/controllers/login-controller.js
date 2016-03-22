@@ -16,19 +16,15 @@ app.controller('LoginController', ['$scope', '$window', '$location', 'UserAuthFa
             if ((username !== undefined && username.length > 0) && (password !== undefined && password.length > 0)) {
                 UserAuthFactory.login(username, password).success(function (data) {
 
-                    console.log(data);
-
                     AuthenticationFactory.isLogged = true;
                     AuthenticationFactory.user = data.data.user.username;
                     AuthenticationFactory.userRole = data.data.user.role;
                     AuthenticationFactory.userId = data.data.user_id;
 
-                    console.log(data.data.user.username);
-
-                    $window.sessionStorage.token = data.token;
+                    $window.sessionStorage.token = data.data.token;
                     $window.sessionStorage.user = data.data.user.username;
                     $window.sessionStorage.userRole = data.data.user.role;
-                    $window.sessionStorage.userId = data.data.user_id;
+                    $window.sessionStorage.userId = data.data.user.user_id;
 
                     $scope.user.username = '';
                     $scope.user.password = '';
