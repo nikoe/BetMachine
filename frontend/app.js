@@ -4,8 +4,10 @@
 var app = angular.module('app', [
     'ngRoute', 'ngResource', 'ui.bootstrap'
 ]).
-    config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
+    config(['$routeProvider', '$httpProvider', '$locationProvider', function($routeProvider, $httpProvider, $locationProvider) {
         $httpProvider.interceptors.push('TokenInterceptor');
+        $locationProvider.html5Mode(true);
+        $locationProvider.hashPrefix('!');
         $routeProvider
             .when('/', {
                 controller: 'MainController',
@@ -24,29 +26,26 @@ var app = angular.module('app', [
                 }
             })
             .otherwise({
-               redirectTo: '/login'
+               redirectTo: '/'
             });
 }]);
 
-app.run(function($rootScope, $window, $location, AuthenticationFactory) {
+app.run(function($rootScope, $window, $location, AuthenticationFactory, AlertFactory) {
 
     AuthenticationFactory.check();
 
     $rootScope.$on('$routeChangeStart', function(event, nextRoute, currentRoute) {
+        AlertFactory.clearAll();
         if((nextRoute.access && nextRoute.access.requireLogin) && !AuthenticationFactory.isLogged) {
-            $location.path('/login');
+            $location.path("/");
         } else {
             if(!AuthenticationFactory.user) AuthenticationFactory.user = $window.sessionStorage.user;
             if(!AuthenticationFactory.userRole) AuthenticationFactory.userRole = $window.sessionStorage.userRole;
+            if(!AuthenticationFactory.userId) AuthenticationFactory.userID = $window.sessionStorage.userID;
         }
     });
 
     $rootScope.$on('$routeChangeSuccess', function(event, nextRoute, currentRoute) {
         $rootScope.role = AuthenticationFactory.userRole;
-
-        if(AuthenticationFactory.isLogged == true && $location.path() == '/login') {
-            $location.path("/");
-        }
-
     });
 });

@@ -21,7 +21,7 @@ app.factory('AuthenticationFactory', function($window) {
 app.factory('UserAuthFactory', function($window, $location, $http, AuthenticationFactory) {
     return {
         login: function(username, password) {
-            return $http.post($location.host() + '/api/auth', {
+            return $http.post($location.protocol() +'://' + $location.host() + ':' + $location.port() + '/api/auth', {
                 username: username,
                 password: password
             });
@@ -31,9 +31,12 @@ app.factory('UserAuthFactory', function($window, $location, $http, Authenticatio
                 AuthenticationFactory.isLogged = false;
                 delete AuthenticationFactory.user;
                 delete AuthenticationFactory.userRole;
+                delete AuthenticationFactory.userId;
                 delete $window.sessionStorage.token;
                 delete $window.sessionStorage.user;
                 delete $window.sessionStorage.userRole;
+                delete $window.sessionStorage.userId;
+
                 $location.path("/");
             }
         }
@@ -47,7 +50,7 @@ app.factory('TokenInterceptor', function($q, $window) {
            config.headers = config.headers || {};
            if($window.sessionStorage.token) {
                config.headers['X-Access-Token'] = $window.sessionStorage.token;
-               config.headers['X-Key'] = $window.sessionStorage.user;
+               config.headers['X-Key'] = $window.sessionStorage.userId;
                config.headers['Content-Type'] = 'application/json';
            }
 
