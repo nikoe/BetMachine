@@ -26,6 +26,6 @@ app.use(function(req, res, next) {
 });
 
 // listen (start app with node server.js) ======================================
-app.listen(app.get('port'), function() {
+app.listen(app.get('port'), 'localhost', function() {
     console.log('Node app is running on port', app.get('port'));
 });
