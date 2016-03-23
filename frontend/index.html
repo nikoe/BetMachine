@@ -34,32 +34,42 @@
                 </button>
                 <a class="navbar-brand" href="#">BetMachine</a>
             </div>
-            <div id="navbar" class="navbar-collapse collapse" ng-controller="LoginController">
-                <div class="navbar-right">
+            <div id="navbar" class="navbar-collapse collapse">
+                <div class="navbar-right" ng-controller="LoginController">
                     <form class="navbar-form" ng-if="!isLogged()">
                         <div class="form-group">
-                            <input type="text" placeholder="&#xf183;  Username" class="form-control" ng-model="user.username">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                                <input type="text" placeholder="Username" class="form-control" ng-model="user.username">
+                            </div>
                         </div>
                         <div class="form-group">
-                            <input type="password" placeholder="&#xf084;  Password" class="form-control" ng-model="user.password">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-key"></i></div>
+                                <input type="password" placeholder="Password" class="form-control" ng-model="user.password">
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary" ng-click="login()"><i class="fa fa-sign-in"></i> Sign in</button>
                         <button type="button" class="btn btn-success">Register</button>
                     </form>
-                    <div class="navbar-btn btn-group" ng-if="isLogged()">
-                        <button type="button" class="btn btn-danger"><i class="fa fa-user"></i> {{getUsername()}}</button>
-                        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="caret"></span>
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a href="#" ng-click="logout()"><i class="fa fa-sign-out"></i> Logout</a></li>
+                    <div class="logged" ng-if="isLogged()">
+                        <p class="navbar-text">Balance: 0,00€</p>
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{getUsername()}} <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">My account</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li ng-click="logout()"><a href="#"><i class="fa fa-sign-out"></i> Logout</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </div>
                 </div>
-            </div><!--/.navbar-collapse -->
+            </div><!--/.nav-collapse -->
         </div>
     </nav>
+
     <div class="container">
         <div class="row">
             <div class="errors">
