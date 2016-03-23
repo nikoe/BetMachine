@@ -4,7 +4,7 @@ var pg = require('pg');
 module.exports = function(connectionString) {
     var user = {
         findAll: function() {
-            return new Promise(function(reject, resolve) {
+            return new Promise(function(resolve, reject) {
                 var results = [];
                 pg.connect(connectionString, function(err, client, done) {
                     // Handle connection errors
