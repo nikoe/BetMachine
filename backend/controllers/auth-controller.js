@@ -52,6 +52,19 @@ var AuthController = {
                     reject({data : 'Invalid credentials'});
                 });
         });
+    },
+    validateUser: function(userid) {
+        return new Promise(function(resolve, reject) {
+           User.findById(userid)
+               .then(function(result) {
+                    if(result.user_id) {
+                        resolve(result);
+                    }
+               })
+               .catch(function(error) {
+                  reject({data : 'Invalid user'})
+               });
+        });
     }
 };
 

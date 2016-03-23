@@ -9,7 +9,7 @@ router.use(function(req, res, next) {
     next();
 });
 
-router.get('/users', userController.index);
+router.get('/users', [require('../middlewares/validaterequest')], userController.index);
 router.post('/auth', authController.auth);
 
 module.exports = router;
