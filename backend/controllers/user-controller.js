@@ -9,6 +9,16 @@ var UserController = {
             .catch(function(error) {
                 res.status(500).json(error);
             });
+    },
+    balance: function(req, res) {
+        if(req.params.userid) {
+            User.balance(req.params.userid)
+                .then(function(result) {
+                   res.json({balance: result});
+                });
+        }else {
+            res.status(500).end();
+        }
     }
 };
 

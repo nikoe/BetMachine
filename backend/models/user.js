@@ -104,6 +104,11 @@ module.exports = function(connectionString) {
                     }
                 });
             });
+        },
+        balance: function(userid) {
+            return new Promise(function(resolve, reject) {
+               resolve(150.70);
+            });
         }
     };
 
