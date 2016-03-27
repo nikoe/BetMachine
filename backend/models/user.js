@@ -118,7 +118,7 @@ module.exports = function(connectionString) {
                         done();
                         reject(result);
                     } else {
-                        var query = client.query("select sum(amount) as balance from transactions where user_id = $1", [userid]);
+                        var query = client.query("select coalesce(sum(amount), 0.00) as balance from transactions where user_id = $1", [userid]);
 
                         query.on('error', function(err) {
                             done();
