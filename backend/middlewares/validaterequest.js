@@ -2,7 +2,7 @@
  * Created by ekni on 23/03/16.
  */
 var jwt = require('jwt-simple');
-var validateUser = require('../controllers/auth-controller').validateUser;
+var authController = require('../controllers/auth-controller');
 
 module.exports = function(req, res, next) {
 
@@ -31,7 +31,7 @@ module.exports = function(req, res, next) {
                 return;
             }
 
-            validateUser(key)
+            authController.findUserById(key)
                 .then(function(dbUser) {
                     if (dbUser) {
                         next();

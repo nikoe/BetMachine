@@ -63,7 +63,7 @@ var AuthController = {
                 });
         });
     },
-    validateUser: function(userid) {
+    findUserById: function(userid) {
         return new Promise(function(resolve, reject) {
            User.findById(userid)
                .then(function(result) {
