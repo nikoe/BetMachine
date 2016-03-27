@@ -9,7 +9,7 @@ app.controller('LoginController', ['$scope', '$window', '$location', 'UserAuthFa
         };
 
         $scope.login = function () {
-            $scope.alerts = [];
+            AlertFactory.clearAll();
             var username = $scope.user.username,
                 password = $scope.user.password;
 
