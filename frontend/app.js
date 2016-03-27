@@ -5,6 +5,7 @@ var app = angular.module('app', ['ngResource', 'ui.bootstrap', 'ui.router', 'ncy
 ]).
     config(['$stateProvider', '$httpProvider', '$urlRouterProvider', '$locationProvider', function($stateProvider, $httpProvider, $urlRouterProvider, $locationProvider) {
         $httpProvider.interceptors.push('TokenInterceptor');
+        $httpProvider.interceptors.push('UnAuthorizedResponseInterceptor');
 
         $locationProvider.html5Mode(true);
 

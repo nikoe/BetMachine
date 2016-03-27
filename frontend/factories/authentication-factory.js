@@ -61,3 +61,17 @@ app.factory('TokenInterceptor', function($q, $window) {
        }
    }
 });
+
+app.factory('UnAuthorizedResponseInterceptor',['$q','$injector',function($q, $injector){
+    return {
+        responseError: function(response){
+            if(response.status === 401) {
+                var UserAuthFactory = $injector.get("UserAuthFactory");
+                UserAuthFactory.logout();
+                return $q.reject(response);
+            }else {
+                return $q.reject(response);
+            }
+        }
+    }
+}]);
