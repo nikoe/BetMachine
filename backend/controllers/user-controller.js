@@ -14,7 +14,7 @@ var UserController = {
         if(req.params.userid) {
             User.balance(req.params.userid)
                 .then(function(result) {
-                   res.json({balance: result});
+                   res.json(result);
                 });
         }else {
             res.status(500).end();

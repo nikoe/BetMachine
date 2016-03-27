@@ -2,6 +2,7 @@
 var User = require('../models/models.js').user;
 var jwt = require('jwt-simple');
 var Promise = require('bluebird');
+var PasswordCrypt = require('../helpers/password-crypt.js');
 
 var AuthController = {
     auth: function(req, res) {
@@ -39,11 +40,20 @@ var AuthController = {
             User.findByUsername(username)
                 .then(function(result) {
                     if(result.user_id) {
-                        var data = {};
-                        data.username = result.username;
-                        data.user_id = result.user_id;
-                        data.role = "admin";
-                        resolve(genToken(data));
+                        PasswordCrypt.comparePassword(password, result.password, function(err, isMatch) {
+                            if(err) {
+                                reject({data : 'Invalid Credentials'});
+                            }
+                           if(isMatch) {
+                                var data = {};
+                                data.username = result.username;
+                                data.user_id = result.user_id;
+                                data.role = "admin";
+                                resolve(genToken(data));
+                           } else {
+                               reject({data : 'Invalid Credentials'});
+                           }
+                        });
                     }else {
                         reject({data : 'Invalid credentials'});
                     }

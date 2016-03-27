@@ -22,6 +22,15 @@ module.exports = function(req, res, next) {
                 return;
             }
 
+            if(decoded.iss != key) {
+                res.status(401);
+                res.json({
+                    "status": 401,
+                    "message": "Invalid Token or Key"
+                });
+                return;
+            }
+
             validateUser(key)
                 .then(function(dbUser) {
                     if (dbUser) {

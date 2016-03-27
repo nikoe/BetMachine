@@ -107,11 +107,38 @@ module.exports = function(connectionString) {
         },
         balance: function(userid) {
             return new Promise(function(resolve, reject) {
-               resolve(150.70);
+                var result = {};
+
+                pg.connect(connectionString, function(err, client, done) {
+                    if (err) {
+                        reject(result);
+                    }
+
+                    if(client == null) {
+                        done();
+                        reject(result);
+                    } else {
+                        var query = client.query("select sum(amount) as balance from transactions where user_id = $1", [userid]);
+
+                        query.on('error', function(err) {
+                            done();
+                            reject(result);
+                        });
+
+                        query.on('row', function(row) {
+                            result = row;
+                        });
+
+                        query.on('end', function() {
+                            done();
+                            resolve(result);
+                        });
+
+                    }
+                });
             });
         }
     };
-
     return user;
 };
 

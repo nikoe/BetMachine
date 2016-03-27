@@ -16,6 +16,7 @@
     "foreman": "1.4.1",
     "method-override": "*",
     "pg": "*",
-    "jwt-simple": "*"
+    "jwt-simple": "*",
+    "bcrypt-nodejs": "latest"
   }
 }
