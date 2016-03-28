@@ -14,28 +14,38 @@ var app = angular.module('app', ['ngResource', 'ui.bootstrap', 'ui.router', 'ncy
                 url: "/",
                 templateUrl: "views/main.html",
                 controller: 'MainController',
+                access: {
+                    requireLogin: false,
+                    preventIfLoggedIn: false
+                },
                 ncyBreadcrumb: {
                     label: 'Home'
                 }
             })
-            .state('test', {
-                url: '/test',
-                template: '<h1>Hello {{ name }}</h1>',
+            .state('signup', {
+                url: '/signup',
+                templateUrl: 'views/signup.html',
+                controller: 'SignupController',
+                access: {
+                    requireLogin: false,
+                    preventIfLoggedIn: true
+                },
                 ncyBreadcrumb: {
-                    label: 'Test'
+                    label: 'New Account'
                 }
             });
         $urlRouterProvider.otherwise("/");
 }]);
 
-app.run(function($rootScope, $window, $state, AuthenticationFactory, AlertFactory) {
+app.run(function($rootScope, $window, $state, AuthenticationFactory, AlertFactory, $location) {
 
     AuthenticationFactory.check();
 
     $rootScope.$on('$stateChangeStart', function(event, nextState, currentState) {
         AlertFactory.clearAll();
-        if((nextState.access && nextState.access.requireLogin) && !AuthenticationFactory.isLogged) {
-            $state.go('/');
+        if(((nextState.access && nextState.access.requireLogin) && !AuthenticationFactory.isLogged) || (nextState.access.preventIfLoggedIn && AuthenticationFactory.isLogged)) {
+            event.preventDefault();
+            $state.go('index');
         } else {
             if(!AuthenticationFactory.user) AuthenticationFactory.user = $window.sessionStorage.user;
             if(!AuthenticationFactory.userRole) AuthenticationFactory.userRole = $window.sessionStorage.userRole;

@@ -44,6 +44,8 @@ app.factory('UserAuthFactory', function($window, $location, $http, Authenticatio
 
 });
 
+app.run(['$state', function ($state) {}])
+
 app.factory('TokenInterceptor', function($q, $window) {
    return {
        request: function(config) {
