@@ -1,15 +1,15 @@
 /**
  * Created by ekni on 19/03/16.
  */
-app.controller('LoginController', ['$scope', '$window', '$location', 'UserAuthFactory', 'AuthenticationFactory', 'AlertFactory',
-    function ($scope, $window, $location, UserAuthFactory, AuthenticationFactory, AlertFactory) {
+app.controller('LoginController', ['$scope', '$window', '$location', 'UserAuthFactory', 'AuthenticationFactory', 'AlertFactory', '$state',
+    function ($scope, $window, $location, UserAuthFactory, AuthenticationFactory, AlertFactory, $state) {
         $scope.user = {
             username: '',
             password: ''
         };
 
         $scope.login = function () {
-            $scope.alerts = [];
+            AlertFactory.clearAll();
             var username = $scope.user.username,
                 password = $scope.user.password;
 
@@ -28,6 +28,8 @@ app.controller('LoginController', ['$scope', '$window', '$location', 'UserAuthFa
 
                     $scope.user.username = '';
                     $scope.user.password = '';
+
+                    $state.go('index');
 
                 }).error(function(error) {
                     $scope.user.username = '';
