@@ -1,0 +1,1 @@
+insert into users (user_id, firstname, surname, birthday, address, postalcode, city, country, username, password) values ('b05c81c3-4fdb-459a-b71d-0395aad47471', 'Testi', 'Testinen', '1991-01-06', 'Testikatu', '00320', 'Helsinki', 'Finland', 'testi', '$2a$10$inKtTfgkxCv8qwHemcQxz.eRRqvPploJSouPIsSpt3n1oDzye3v72');
