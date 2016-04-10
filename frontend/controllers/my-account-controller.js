@@ -6,6 +6,7 @@ app.controller('MyAccountController', ['$scope', 'AccountService', '$window',
     function($scope, AccountService, $window) {
 
         $scope.userdata = null;
+        $scope.username = $window.sessionStorage.user;
 
         AccountService.getUserData($window.sessionStorage.userId)
             .then(function(result) {
@@ -13,6 +14,4 @@ app.controller('MyAccountController', ['$scope', 'AccountService', '$window',
             }, function(error) {
                 console.log(error);
             });
-
-
     }]);
