@@ -37,7 +37,7 @@ var AuthController = {
     },
     validate: function (username, password) {
         return new Promise(function(resolve, reject) {
-            User.findByUsername(username)
+            User.findAuthDataByUsername(username)
                 .then(function(result) {
                     if(result.user_id) {
                         PasswordCrypt.comparePassword(password, result.password, function(err, isMatch) {
@@ -65,7 +65,7 @@ var AuthController = {
     },
     findUserById: function(userid) {
         return new Promise(function(resolve, reject) {
-           User.findById(userid)
+           User.findAuthDataByUserId(userid)
                .then(function(result) {
                     if(result.user_id) {
                         resolve(result);

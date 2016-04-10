@@ -1,8 +1,8 @@
 /**
  * Created by ekni on 19/03/16.
  */
-app.controller('LoginController', ['$scope', '$window', '$location', 'UserAuthFactory', 'AuthenticationFactory', 'AlertFactory', '$state',
-    function ($scope, $window, $location, UserAuthFactory, AuthenticationFactory, AlertFactory, $state) {
+app.controller('LoginController', ['$scope', '$window', '$location', 'UserAuthFactory', 'AuthenticationFactory', 'AlertFactory', '$state', '$rootScope',
+    function ($scope, $window, $location, UserAuthFactory, AuthenticationFactory, AlertFactory, $state, $rootScope) {
         $scope.user = {
             username: '',
             password: ''
@@ -28,6 +28,8 @@ app.controller('LoginController', ['$scope', '$window', '$location', 'UserAuthFa
 
                     $scope.user.username = '';
                     $scope.user.password = '';
+
+                    $rootScope.$broadcast('loggedIn', '');
 
                     $state.go('index');
 

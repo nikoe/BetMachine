@@ -33,6 +33,18 @@ var app = angular.module('app', ['ngResource', 'ui.bootstrap', 'ui.router', 'ncy
                 ncyBreadcrumb: {
                     label: 'New Account'
                 }
+            })
+            .state('my-account', {
+                url: '/my-account',
+                templateUrl:'views/my-account.html',
+                controller: 'MyAccountController',
+                access: {
+                    requireLogin: true,
+                    preventIfLoggedIn: false
+                },
+                ncyBreadcrumb: {
+                    label: 'My Account'
+                }
             });
         $urlRouterProvider.otherwise("/");
 }]);

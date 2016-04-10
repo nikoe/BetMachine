@@ -12,6 +12,7 @@ CREATE TABLE users
   country text,
   username text NOT NULL,
   password text NOT NULL,
+  role text NOT NULL default 'USER',
   CONSTRAINT users_pkey PRIMARY KEY (user_id)
 );
 

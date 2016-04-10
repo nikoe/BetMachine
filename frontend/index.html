@@ -19,7 +19,8 @@
     <script src="services/account-service.js"></script>
     <script src="controllers/main-controller.js"></script>
     <script src="controllers/login-controller.js"></script>
-    <script src="controllers/account-controller.js"></script>
+    <script src="controllers/nav-account-controller.js"></script>
+    <script src="controllers/my-account-controller.js"></script>
     <script src="controllers/signup-controller.js"></script>
     <script src="factories/alert-factory.js"></script>
 
@@ -57,14 +58,14 @@
                             <button type="button" class="btn btn-success" ui-sref="signup"><i class="fa fa-pencil"></i> Register</button>
                         </form>
                     </div>
-                    <div ng-controller="AccountController">
-                        <div class="logged" ng-controller="AccountController" ng-if="isLogged()">
+                    <div ng-controller="NavAccountController">
+                        <div class="logged" ng-if="isLogged()">
                             <p class="navbar-text">Balance: {{(balance | number:2) + '€'}}</p>
                             <ul class="nav navbar-nav">
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{username}} <span class="caret"></span></a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="#">My account</a></li>
+                                        <li><a ui-sref="my-account">My account</a></li>
                                         <li role="separator" class="divider"></li>
                                         <li ng-click="logout()"><a href="#"><i class="fa fa-sign-out"></i> Logout</a></li>
                                     </ul>

@@ -19,5 +19,21 @@ app.service('AccountService', ['$http', '$q', '$rootScope','$location',
                 }
             });
         };
+
+        this.getUserData = function(userid) {
+          return $q(function(resolve, reject) {
+             if(userid) {
+                 $http.get($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/api/users/' + userid)
+                     .success(function (result) {
+                         resolve(result);
+                     })
+                     .error(function (error) {
+                         reject(error);
+                     });
+             }else {
+                 reject('No userid');
+             }
+          });
+        }
     }
 ]);

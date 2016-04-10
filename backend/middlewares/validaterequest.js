@@ -21,7 +21,6 @@ module.exports = function(req, res, next) {
                 });
                 return;
             }
-
             if(decoded.iss != key) {
                 res.status(401);
                 res.json({
@@ -30,12 +29,10 @@ module.exports = function(req, res, next) {
                 });
                 return;
             }
-
             authController.findUserById(key)
                 .then(function(dbUser) {
                     if (dbUser) {
                         next();
-
                     } else {
                         res.status(401);
                         res.json({
@@ -55,6 +52,7 @@ module.exports = function(req, res, next) {
                 });
 
         } catch (err) {
+            console.log(err);
             res.status(500);
             res.json({
                 "status": 500,

@@ -39,7 +39,7 @@ module.exports = function(connectionString) {
                 });
             });
         },
-        findById: function(id) {
+        findAuthDataByUserId: function(id) {
             return new Promise(function(resolve, reject) {
                 var result = {};
 
@@ -72,7 +72,7 @@ module.exports = function(connectionString) {
                 });
             });
         },
-        findByUsername: function(username) {
+        findAuthDataByUsername: function(username) {
             return new Promise(function(resolve, reject) {
                 var result = {};
 
@@ -119,6 +119,39 @@ module.exports = function(connectionString) {
                         reject(result);
                     } else {
                         var query = client.query("select coalesce(sum(amount), 0.00) as balance from transactions where user_id = $1", [userid]);
+
+                        query.on('error', function(err) {
+                            done();
+                            reject(result);
+                        });
+
+                        query.on('row', function(row) {
+                            result = row;
+                        });
+
+                        query.on('end', function() {
+                            done();
+                            resolve(result);
+                        });
+
+                    }
+                });
+            });
+        },
+        findUserDataById: function(userid) {
+            return new Promise(function(resolve, reject) {
+                var result = {};
+
+                pg.connect(connectionString, function(err, client, done) {
+                    if (err) {
+                        reject(result);
+                    }
+
+                    if(client == null) {
+                        done();
+                        reject(result);
+                    } else {
+                        var query = client.query("select firstname, surname, address, postalcode, city, country from users where user_id = $1", [userid]);
 
                         query.on('error', function(err) {
                             done();
