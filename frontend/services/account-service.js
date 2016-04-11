@@ -34,6 +34,18 @@ app.service('AccountService', ['$http', '$q', '$rootScope','$location',
                  reject('No userid');
              }
           });
-        }
+        };
+
+        this.updateUserData = function(userid, data) {
+            return $q(function(resolve, reject) {
+                $http.put($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/api/users/' + userid, data)
+                    .success(function(result) {
+                        resolve(result);
+                    })
+                    .error(function(error) {
+                        reject(error);
+                    });
+            });
+        };
     }
 ]);

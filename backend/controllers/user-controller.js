@@ -33,6 +33,19 @@ var UserController = {
         }else {
             res.status(500).end();
         }
+    },
+    save: function(req, res) {
+        //TODO datavalidation
+        User.updateUserDataById(req.params.userid, req.body)
+            .then(function(result) {
+                res.json(result);
+            })
+            .catch(function(error) {
+               res.status(500).json(error);
+            });
+    },
+    create: function(req, res) {
+
     }
 };
 

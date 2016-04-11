@@ -36,10 +36,10 @@ app.controller('LoginController', ['$scope', '$window', '$location', 'UserAuthFa
                 }).error(function(error) {
                     $scope.user.username = '';
                     $scope.user.password = '';
-                    AlertFactory.add('danger', error.message);
+                    AlertFactory.add('danger', error.message, 'fa fa-ban');
                 });
             } else {
-                AlertFactory.add('danger','Please type username and password and try again!');
+                AlertFactory.add('danger','Please type username and password and try again!', 'fa fa-ban');
             }
         };
 

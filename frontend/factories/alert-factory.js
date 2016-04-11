@@ -6,10 +6,11 @@ app.factory('AlertFactory', ['$rootScope', function($rootScope) {
 
     $rootScope.alerts = [];
 
-    alertfactory.add = function(type, msg) {
+    alertfactory.add = function(type, msg, icon) {
         $rootScope.alerts.push({
             type: type,
             msg: msg,
+            icon: icon,
             close: function() {
                 return alertfactory.closeAlert(this);
             }

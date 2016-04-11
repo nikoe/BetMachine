@@ -81,7 +81,7 @@
     <div class="container">
         <div class="row">
             <div class="errors col-md-12">
-                <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="alert.close()"><i class="fa fa-ban"></i> {{alert.msg}}</uib-alert>
+                <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="alert.close()"><i class="{{alert.icon}}"></i> {{alert.msg}}</uib-alert>
             </div>
         </div>
         <div class="row">

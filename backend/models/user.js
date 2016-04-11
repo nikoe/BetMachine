@@ -170,6 +170,42 @@ module.exports = function(connectionString) {
                     }
                 });
             });
+        },
+        updateUserDataById: function(userid, data) {
+            return new Promise(function(resolve, reject) {
+                var result = {};
+
+                pg.connect(connectionString, function(err, client, done) {
+                    if (err) {
+                        reject(result);
+                    }
+
+                    if(client == null) {
+                        done();
+                        reject(result);
+                    } else {
+                        client.query("update users set firstname = ($2), surname = ($3), address = ($4), postalcode = ($5), city = ($6), country = ($7) where user_id = ($1)", [userid, data.firstname, data.surname, data.address, data.postalcode, data.city, data.country]);
+
+                        var query = client.query("select firstname, surname, address, postalcode, city, country from users where user_id = $1", [userid]);
+
+                        query.on('error', function(err) {
+                            done();
+                            reject(result);
+                        });
+
+                        query.on('row', function(row) {
+                            result.user = row;
+                        });
+
+                        query.on('end', function() {
+                            done();
+                            result.msg = 'Account information updated!';
+                            resolve(result);
+                        });
+
+                    }
+                });
+            });
         }
     };
     return user;
