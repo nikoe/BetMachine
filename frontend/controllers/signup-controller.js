@@ -11,13 +11,13 @@ app.controller('SignupController', ['$scope', 'AccountService', '$state', 'Alert
                 .then(function(result) {
 
                     AlertFactory.clearAll();
-                    AlertFactory.add('success', result.message, 'fa fa-check');
+                    AlertFactory.add('success', result.msg, 'fa fa-check');
 
                     $state.go('index');
 
                 }, function(error) {
                     AlertFactory.clearAll();
-                    AlertFactory.add('danger', error.message, 'fa fa-ban');
+                    AlertFactory.add('danger', error.msg, 'fa fa-ban');
                 });
         }
     }

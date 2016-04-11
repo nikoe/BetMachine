@@ -46,7 +46,7 @@ var UserController = {
             });
     },
     create: function(req, res) {
-        if(req.body.username && req.body.password) {
+        if((req.body.username && req.body.password) && (req.body.username.length > 0 && req.body.password.length > 0)) {
             var password = PasswordCrypt.cryptPassword(req.body.password, function(error, result) {
                 var data = {
                     username: req.body.username,
