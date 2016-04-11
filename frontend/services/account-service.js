@@ -47,5 +47,17 @@ app.service('AccountService', ['$http', '$q', '$rootScope','$location',
                     });
             });
         };
+
+        this.createUserData = function(data) {
+            return $q(function(resolve, reject) {
+                $http.post($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/api/users/', data)
+                    .success(function (result) {
+                        resolve(result);
+                    })
+                    .error(function(error) {
+                        reject(error);
+                    });
+            });
+        };
     }
 ]);

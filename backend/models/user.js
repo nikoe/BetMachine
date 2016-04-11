@@ -206,6 +206,39 @@ module.exports = function(connectionString) {
                     }
                 });
             });
+        },
+        createUserData: function(data) {
+            return new Promise(function(resolve, reject) {
+                var result = {};
+
+                pg.connect(connectionString, function(err, client, done) {
+                    if (err) {
+                        reject();
+                    }
+
+                    if (client == null) {
+                        done();
+                        reject();
+                    } else {
+                        var query = client.query("insert into users (username, password) values ($1, $2)", [data.username, data.password]);
+
+                        query.on('error', function(err) {
+                            done();
+                            reject();
+                        });
+
+                        query.on('row', function(row) {
+                            console.log(row);
+                        });
+
+                        query.on('end', function() {
+                            done();
+                            result.msg = 'Account created!';
+                            resolve(result);
+                        });
+                    }
+                });
+            });
         }
     };
     return user;

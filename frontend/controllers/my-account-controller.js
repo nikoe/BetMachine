@@ -24,6 +24,9 @@ app.controller('MyAccountController', ['$scope', 'AccountService', '$window', 'A
                         AlertFactory.clearAll();
                         AlertFactory.add('success', result.msg, 'fa fa-check');
                         $scope.userdata = result.user;
+                    }, function(error) {
+                        AlertFactory.clearAll();
+                        AlertFactory.add('danger', error.message, 'fa fa-ban');
                     });
             }
         };
