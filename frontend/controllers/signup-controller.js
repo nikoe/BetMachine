@@ -10,10 +10,10 @@ app.controller('SignupController', ['$scope', 'AccountService', '$state', 'Alert
             AccountService.createUserData($scope.data)
                 .then(function(result) {
 
+                    $state.go('index');
+
                     AlertFactory.clearAll();
                     AlertFactory.add('success', result.msg, 'fa fa-check');
-
-                    $state.go('index');
 
                 }, function(error) {
                     AlertFactory.clearAll();
