@@ -9,5 +9,3 @@ Urheiluvedonlyöntiin tarkoitettu sovellus. Käyttäjät voivat lyödä vetoa le
 
 ## Sovellus tuotannossa
 https://sleepy-mountain-51541.herokuapp.com
-
-Testitunnukset: tunnus:testi salasana:testi
