@@ -11,8 +11,8 @@ router.get('/users/:userid', [require('../middlewares/validaterequest'), require
 router.put('/users/:userid', [require('../middlewares/validaterequest'), require('../middlewares/validateuseraction')], userController.save);
 router.get('/users/:userid/balance', [require('../middlewares/validaterequest'), require('../middlewares/validateuseraction')], userController.balance);
 
-router.post('/transactions/:userid', [require('../middlewares/validaterequest'), require('../middlewares/validateuseraction')], transactionController.add);
-
+router.post('/transactions/:userid', [require('../middlewares/validaterequest'), require('../middlewares/validateuseraction')], transactionController.create);
+router.get('/transactions/:userid', [require('../middlewares/validaterequest'), require('../middlewares/validateuseraction')], transactionController.findByUserId);
 
 router.post('/auth', authController.auth);
 

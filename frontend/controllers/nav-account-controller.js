@@ -2,15 +2,15 @@
  * Created by ekni on 25/03/16.
  */
 
-app.controller('NavAccountController', ['$scope', 'AuthenticationFactory','UserAuthFactory', 'AccountService', '$window',
-    function($scope, AuthenticationFactory, UserAuthFactory, AccountService, $window) {
+app.controller('NavAccountController', ['$scope', 'AuthenticationFactory','UserAuthFactory', 'TransactionService', '$window',
+    function($scope, AuthenticationFactory, UserAuthFactory, TransactionService, $window) {
 
         $scope.userId = $window.sessionStorage.userId;
         $scope.username = $window.sessionStorage.user;
         $scope.balance = 0.00;
 
         if(AuthenticationFactory.isLogged) {
-            AccountService.getBalance($window.sessionStorage.userId)
+            TransactionService.getBalance($window.sessionStorage.userId)
                 .then(function (balance) {
                     $scope.balance = balance;
                 }, function (error) {
@@ -36,7 +36,7 @@ app.controller('NavAccountController', ['$scope', 'AuthenticationFactory','UserA
         $scope.$on('loggedIn', function(event, data) {
             $scope.userId = $window.sessionStorage.userId;
             $scope.username = $window.sessionStorage.user;
-            AccountService.getBalance($scope.userId)
+            TransactionService.getBalance($scope.userId)
                 .then(function(balance) {
                     $scope.balance = balance;
                 }, function(error) {

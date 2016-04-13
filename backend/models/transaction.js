@@ -71,6 +71,43 @@ module.exports = function(connectionString) {
                     }
                 });
             });
+        },
+
+        findByUserId: function(userid) {
+            return new Promise(function(resolve, reject) {
+                var results = [];
+                pg.connect(connectionString, function(err, client, done) {
+                    // Handle connection errors
+                    if(err) {
+                        done();
+                        reject(results);
+                    }
+
+                    if(client == null) {
+                        done();
+                        reject(results);
+                    } else {
+                        var query = client.query("SELECT transaction_time, amount, transaction_type FROM transactions where user_id = $1", [userid]);
+
+                        //if error reject
+                        query.on('error', function(err) {
+                            done();
+                            reject(results);
+                        });
+
+                        // Stream results back one row at a time
+                        query.on('row', function (row) {
+                            results.push(row);
+                        });
+
+                        // After all data is returned, close connection and return results
+                        query.on('end', function () {
+                            done();
+                            resolve(results);
+                        });
+                    }
+                });
+            });
         }
 
     };

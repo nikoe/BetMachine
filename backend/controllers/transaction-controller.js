@@ -6,7 +6,7 @@ var Transaction = require('../models/models.js').transaction;
 
 var TransactionController = {
 
-    add: function(req, res) {
+    create: function(req, res) {
         var data = req.body;
 
         if(data.userid) {
@@ -19,6 +19,15 @@ var TransactionController = {
                 });
         }
 
+    },
+    findByUserId: function(req, res) {
+        Transaction.findByUserId(req.params.userid)
+            .then(function(result) {
+                res.json(result);
+            })
+            .catch(function(error) {
+
+            });
     }
 };
 

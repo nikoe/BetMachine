@@ -41,7 +41,7 @@
     </div>
 
     <div class="panel panel-default">
-        <div class="panel-heading">Account funds</div>
+        <div class="panel-heading">Funds</div>
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-6">
@@ -54,13 +54,37 @@
                     <form class="form-inline">
                         <div class="form-group">
                             <label class="sr-only" for="balanceInput">Deposit/Withdraw...</label>
-                            <input type="text" class="form-control" id="balanceInput" placeholder="Deposit/Withdraw..." ng-model="balanceInput">
+                            <input type="text" class="form-control" id="balanceInput" placeholder="Deposit/Withdraw..."
+                                   ng-model="balanceInput">
                         </div>
                         <button type="button" class="btn btn-success" ng-click="deposit()">Deposit</button>
                         <button type="button" class="btn btn-danger" ng-click="withdraw()">Withdraw</button>
                     </form>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Transactions</div>
+        <div class="panel-body">
+            <table class="table table-bordered">
+                <tr>
+                    <th>Time</th>
+                    <th>Amount</th>
+                    <th>Type</th>
+                </tr>
+
+                <tr ng-repeat="transaction in transactions | filter : paginate">
+                    <td>{{transaction.transaction_time | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                    <td><span ng-class="transaction.amount > 0 ? 'text-success' : (transaction.amount < 0 ? 'text-danger' : '')">{{transaction.amount > 0 ? '+' : ''}}{{number}}{{transaction.amount}}</span></td>
+                    <td>{{transaction.transaction_type}}</td>
+                </tr>
+            </table>
+            <uib-pagination total-items="totalItems" ng-model="currentPage"
+                        max-size="10" boundary-links="true" first-text="«" previous-text="‹" next-text="›" last-text="»"
+                        items-per-page="numPerPage" class="pagination-md" style="margin-top: -10px;">
+            </uib-pagination>
         </div>
     </div>
 </div>

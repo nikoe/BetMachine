@@ -2,13 +2,26 @@
  * Created by Niko on 10.4.2016.
  */
 
-app.controller('MyAccountController', ['$scope', 'AccountService', '$window', 'AlertFactory',
-    function($scope, AccountService, $window, AlertFactory) {
+app.controller('MyAccountController', ['$scope', 'AccountService', '$window', 'AlertFactory', 'TransactionService',
+    function($scope, AccountService, $window, AlertFactory, TransactionService) {
 
         $scope.userdata = null;
         $scope.username = $window.sessionStorage.user;
         $scope.balance = 0.00;
         $scope.balanceInput = '';
+        $scope.transactions = null;
+
+        $scope.totalItems = 0;
+        $scope.currentPage = 1;
+        $scope.numPerPage = 10;
+
+        $scope.paginate = function(value) {
+            var begin, end, index;
+            begin = ($scope.currentPage - 1) * $scope.numPerPage;
+            end = begin + $scope.numPerPage;
+            index = $scope.transactions.indexOf(value);
+            return (begin <= index && index < end);
+        };
 
         AccountService.getUserData($window.sessionStorage.userId)
             .then(function(result) {
@@ -18,11 +31,19 @@ app.controller('MyAccountController', ['$scope', 'AccountService', '$window', 'A
             });
 
 
-        AccountService.getBalance($window.sessionStorage.userId)
+        TransactionService.getBalance($window.sessionStorage.userId)
             .then(function(result) {
                 $scope.balance = result;
             }, function(error) {
+                console.log(error);
+            });
 
+        TransactionService.getTransactions($window.sessionStorage.userId)
+            .then(function(result) {
+               $scope.transactions = result;
+                $scope.totalItems = result.length;
+            }, function(error) {
+                console.log(error);
             });
 
         $scope.update = function() {
@@ -50,15 +71,24 @@ app.controller('MyAccountController', ['$scope', 'AccountService', '$window', 'A
                     amount: amount
                 };
 
-                AccountService.deposit($window.sessionStorage.userId, data)
+                TransactionService.deposit($window.sessionStorage.userId, data)
                     .then(function(result) {
                         $scope.balance = result;
+
+                        TransactionService.getTransactions($window.sessionStorage.userId)
+                            .then(function(result) {
+                                $scope.transactions = result;
+                                $scope.totalItems = result.length;
+                            }, function(error) {
+                            });
+
                     }, function(error) {
                         AlertFactory.clearAll();
                         AlertFactory.add('danger', error.msg, 'fa fa-ban');
                     });
             }else {
-                console.log("Not numeric");
+                AlertFactory.clearAll();
+                AlertFactory.add('danger', 'Amount must be numeric!', 'fa fa-ban');
             }
 
             $scope.balanceInput = '';
