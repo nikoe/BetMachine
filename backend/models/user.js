@@ -251,7 +251,7 @@ module.exports = function(connectionString) {
                 var client = new pg.Client(connectionString);
                 client.connect();
 
-                client.query('SELECT count(user_id) as count from users where username = $1', [username], function(error, result) {
+                client.query('SELECT count(user_id) as count from users where username = $1', [username.toLowerCase()], function(error, result) {
                     if(result.rows[0].count == 0) {
                         callback(true);
                     }else {
