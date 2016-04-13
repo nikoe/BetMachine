@@ -1,7 +1,7 @@
 var bcrypt = require('bcrypt-nodejs');
 
 exports.cryptPassword = function(password, callback) {
-    bcrypt.genSalt(10, function(err, salt) {
+    bcrypt.genSalt(12, function(err, salt) {
         if (err)
             return callback(err);
 

@@ -17,6 +17,7 @@
     "method-override": "*",
     "pg": "*",
     "jwt-simple": "*",
-    "bcrypt-nodejs": "latest"
+    "bcrypt-nodejs": "latest",
+    "morgan": "latest"
   }
 }
