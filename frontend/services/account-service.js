@@ -9,6 +9,7 @@ app.service('AccountService', ['$http', '$q', '$rootScope','$location',
                 if(userid) {
                     $http.get($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/api/users/' + userid + '/balance')
                         .success(function (result) {
+                            $rootScope.$broadcast('account:balance', result.balance);
                             resolve(result.balance);
                         })
                         .error(function (error) {
@@ -58,6 +59,19 @@ app.service('AccountService', ['$http', '$q', '$rootScope','$location',
                         reject(error);
                     });
             });
+        };
+
+        this.deposit = function(userid, data) {
+          return $q(function(resolve, reject)  {
+             $http.post($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/api/transactions/' + userid, data)
+                 .success(function(result) {
+                     $rootScope.$broadcast('account:balance', result.balance);
+                     resolve(result.balance);
+                 })
+                 .error(function(error) {
+                     reject(error);
+                 });
+          });
         };
     }
 ]);

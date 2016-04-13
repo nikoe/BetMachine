@@ -7,6 +7,8 @@ app.controller('MyAccountController', ['$scope', 'AccountService', '$window', 'A
 
         $scope.userdata = null;
         $scope.username = $window.sessionStorage.user;
+        $scope.balance = 0.00;
+        $scope.balanceInput = '';
 
         AccountService.getUserData($window.sessionStorage.userId)
             .then(function(result) {
@@ -16,9 +18,15 @@ app.controller('MyAccountController', ['$scope', 'AccountService', '$window', 'A
             });
 
 
+        AccountService.getBalance($window.sessionStorage.userId)
+            .then(function(result) {
+                $scope.balance = result;
+            }, function(error) {
+
+            });
+
         $scope.update = function() {
             if($scope.userdata != null) {
-                console.log('tääl');
                 AccountService.updateUserData($window.sessionStorage.userId, $scope.userdata)
                     .then(function(result) {
                         AlertFactory.clearAll();
@@ -29,6 +37,30 @@ app.controller('MyAccountController', ['$scope', 'AccountService', '$window', 'A
                         AlertFactory.add('danger', error.message, 'fa fa-ban');
                     });
             }
+        };
+
+
+        $scope.deposit = function() {
+            var amount = parseFloat($scope.balanceInput.replace(',', '.')).toFixed(2);
+
+            if(!isNaN(amount)) {
+                var data = {
+                    userid: $window.sessionStorage.userId,
+                    type: 'DEPOSIT',
+                    amount: amount
+                };
+
+                AccountService.deposit($window.sessionStorage.userId, data)
+                    .then(function(result) {
+                        $scope.balance = result;
+                    }, function(error) {
+
+                    });
+            }else {
+                console.log("Not numeric");
+            }
+
+            $scope.balanceInput = '';
         };
 
     }]);
