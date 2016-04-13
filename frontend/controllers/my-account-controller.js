@@ -65,27 +65,34 @@ app.controller('MyAccountController', ['$scope', 'AccountService', '$window', 'A
             var amount = parseFloat($scope.balanceInput.replace(',', '.')).toFixed(2);
 
             if(!isNaN(amount)) {
-                var data = {
-                    userid: $window.sessionStorage.userId,
-                    type: 'DEPOSIT',
-                    amount: amount
-                };
 
-                TransactionService.deposit($window.sessionStorage.userId, data)
-                    .then(function(result) {
-                        $scope.balance = result;
+                if(amount > 0) {
 
-                        TransactionService.getTransactions($window.sessionStorage.userId)
-                            .then(function(result) {
-                                $scope.transactions = result;
-                                $scope.totalItems = result.length;
-                            }, function(error) {
-                            });
+                    var data = {
+                        userid: $window.sessionStorage.userId,
+                        type: 'DEPOSIT',
+                        amount: amount
+                    };
 
-                    }, function(error) {
-                        AlertFactory.clearAll();
-                        AlertFactory.add('danger', error.msg, 'fa fa-ban');
-                    });
+                    TransactionService.deposit($window.sessionStorage.userId, data)
+                        .then(function (result) {
+                            $scope.balance = result;
+
+                            TransactionService.getTransactions($window.sessionStorage.userId)
+                                .then(function (result) {
+                                    $scope.transactions = result;
+                                    $scope.totalItems = result.length;
+                                }, function (error) {
+                                });
+
+                        }, function (error) {
+                            AlertFactory.clearAll();
+                            AlertFactory.add('danger', error.msg, 'fa fa-ban');
+                        });
+                }else {
+                    AlertFactory.clearAll();
+                    AlertFactory.add('danger', 'You can only deposit positive amounts!', 'fa fa-ban');
+                }
             }else {
                 AlertFactory.clearAll();
                 AlertFactory.add('danger', 'Amount must be numeric!', 'fa fa-ban');

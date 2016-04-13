@@ -36,6 +36,14 @@ module.exports = function(connectionString) {
                     return;
                 }
 
+                if(data.type == 'DEPOSIT') {
+                    if(data.amount <= 0) {
+                        result.msg = 'You can only deposit positive amounts!';
+                        reject(result);
+                        return;
+                    }
+                }
+
                 pg.connect(connectionString, function(err, client, done) {
                     if (err) {
                         reject(result);
