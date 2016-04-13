@@ -63,14 +63,19 @@ app.service('AccountService', ['$http', '$q', '$rootScope','$location',
 
         this.deposit = function(userid, data) {
           return $q(function(resolve, reject)  {
-             $http.post($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/api/transactions/' + userid, data)
-                 .success(function(result) {
-                     $rootScope.$broadcast('account:balance', result.balance);
-                     resolve(result.balance);
-                 })
-                 .error(function(error) {
-                     reject(error);
-                 });
+
+              if(Math.abs(data.amount) > 1000000) {
+                  reject({msg: 'Maximum deposit amount is 1M €'});
+              }else {
+                  $http.post($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/api/transactions/' + userid, data)
+                      .success(function(result) {
+                          $rootScope.$broadcast('account:balance', result.balance);
+                          resolve(result.balance);
+                      })
+                      .error(function(error) {
+                          reject(error);
+                      });
+              }
           });
         };
     }

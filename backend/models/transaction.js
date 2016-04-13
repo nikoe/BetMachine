@@ -15,26 +15,37 @@ module.exports = function(connectionString) {
                 if(!data.type) {
                     result.msg = 'Transaction type missing!';
                     reject(result);
+                    return;
                 }
 
                 if(!data.amount) {
                     result.msg = 'Amount missing!';
                     reject(result);
+                    return;
                 }
 
                 if(!data.userid) {
                     result.msg = 'Userid missing!';
                     reject(result);
+                    return;
+                }
+
+                if(Math.abs(data.amount)  > 1000000) {
+                    result.msg = 'Too high amount!';
+                    reject(result);
+                    return;
                 }
 
                 pg.connect(connectionString, function(err, client, done) {
                     if (err) {
                         reject(result);
+                        return;
                     }
 
                     if(client == null) {
                         done();
                         reject(result);
+                        return;
                     } else {
 
                         client.query("insert into transactions (user_id, amount, transaction_type) values ($1, $2, $3)", [data.userid, data.amount, data.type]);
@@ -44,6 +55,7 @@ module.exports = function(connectionString) {
                         query.on('error', function(err) {
                             done();
                             reject(result);
+                            return;
                         });
 
                         query.on('row', function(row) {
@@ -53,6 +65,7 @@ module.exports = function(connectionString) {
                         query.on('end', function() {
                             done();
                             resolve(result);
+                            return;
                         });
 
                     }

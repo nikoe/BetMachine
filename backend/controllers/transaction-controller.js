@@ -15,7 +15,7 @@ var TransactionController = {
                     res.json(result);
                 })
                 .catch(function(error) {
-
+                    res.status(500).json(error);
                 });
         }
 

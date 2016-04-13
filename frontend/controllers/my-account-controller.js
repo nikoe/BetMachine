@@ -54,7 +54,8 @@ app.controller('MyAccountController', ['$scope', 'AccountService', '$window', 'A
                     .then(function(result) {
                         $scope.balance = result;
                     }, function(error) {
-
+                        AlertFactory.clearAll();
+                        AlertFactory.add('danger', error.msg, 'fa fa-ban');
                     });
             }else {
                 console.log("Not numeric");
