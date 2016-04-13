@@ -208,37 +208,58 @@ module.exports = function(connectionString) {
             });
         },
         createUserData: function(data) {
+            var that = this;
             return new Promise(function(resolve, reject) {
                 var result = {};
+                that.isUsernameFree(data.username, function(isfree) {
+                    if(isfree) {
+                        pg.connect(connectionString, function (err, client, done) {
+                            if (err) {
+                                reject();
+                            }
 
-                pg.connect(connectionString, function(err, client, done) {
-                    if (err) {
-                        reject();
-                    }
+                            if (client == null) {
+                                done();
+                                reject();
+                            } else {
 
-                    if (client == null) {
-                        done();
-                        reject();
+                                var query = client.query("insert into users (username, password) values ($1, $2)", [data.username, data.password]);
+
+                                query.on('error', function (err) {
+                                    done();
+                                    reject();
+                                });
+
+                                query.on('row', function (row) {
+                                });
+
+                                query.on('end', function () {
+                                    done();
+                                    result.msg = 'Account created!';
+                                    resolve(result);
+                                });
+                            }
+                        });
                     } else {
-                        var query = client.query("insert into users (username, password) values ($1, $2)", [data.username, data.password]);
-
-                        query.on('error', function(err) {
-                            done();
-                            reject();
-                        });
-
-                        query.on('row', function(row) {
-                        });
-
-                        query.on('end', function() {
-                            done();
-                            result.msg = 'Account created!';
-                            resolve(result);
-                        });
+                        result.msg = 'Username is already in use!';
+                        reject(result);
                     }
                 });
             });
+        },
+        isUsernameFree: function(username, callback) {
+                var client = new pg.Client(connectionString);
+                client.connect();
+
+                client.query('SELECT count(user_id) as count from users where username = $1', [username], function(error, result) {
+                    if(result.rows[0].count == 0) {
+                        callback(true);
+                    }else {
+                        callback(false);
+                    }
+                });
         }
+
     };
     return user;
 };

@@ -56,6 +56,9 @@ var UserController = {
                 User.createUserData(data)
                     .then(function(result) {
                         res.json(result);
+                    })
+                    .catch(function(error) {
+                        res.status(409).json(error);
                     });
             });
         }else {
