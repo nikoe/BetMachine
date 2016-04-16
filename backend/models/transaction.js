@@ -9,39 +9,15 @@ module.exports = function(connectionString) {
     var transaction = {
 
         create: function(data) {
+
+            var that = this;
+
             return new Promise(function(resolve, reject) {
                 var result = {};
 
-                if(!data.type) {
-                    result.msg = 'Transaction type missing!';
-                    reject(result);
-                    return;
-                }
 
-                if(!data.amount) {
-                    result.msg = 'Amount missing!';
-                    reject(result);
-                    return;
-                }
-
-                if(!data.userid) {
-                    result.msg = 'Userid missing!';
-                    reject(result);
-                    return;
-                }
-
-                if(Math.abs(data.amount)  > 1000000) {
-                    result.msg = 'Too high amount!';
-                    reject(result);
-                    return;
-                }
-
-                if(data.type == 'DEPOSIT') {
-                    if(data.amount <= 0) {
-                        result.msg = 'You can only deposit positive amounts!';
-                        reject(result);
-                        return;
-                    }
+                if(data.type == 'WITHDRAW') {
+                    data.amount = (Math.abs(data.amount) * -1.00).toFixed(2);
                 }
 
                 pg.connect(connectionString, function(err, client, done) {
@@ -95,7 +71,7 @@ module.exports = function(connectionString) {
                         done();
                         reject(results);
                     } else {
-                        var query = client.query("SELECT transaction_time, amount, transaction_type FROM transactions where user_id = $1", [userid]);
+                        var query = client.query("SELECT transaction_time, amount, transaction_type FROM transactions where user_id = $1 order by transaction_time desc", [userid]);
 
                         //if error reject
                         query.on('error', function(err) {
@@ -115,6 +91,18 @@ module.exports = function(connectionString) {
                         });
                     }
                 });
+            });
+        },
+        findBalanceByUserId: function(userid, callback) {
+            var client = new pg.Client(connectionString);
+            client.connect();
+
+            client.query("select coalesce(sum(amount), 0.00) as balance from transactions where user_id = $1", [userid], function(error, result) {
+                if(error) {
+                    callback(error, null);
+                }else {
+                    callback(null, result.rows[0].balance);
+                }
             });
         }
 

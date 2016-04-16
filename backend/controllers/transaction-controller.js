@@ -3,6 +3,7 @@
  */
 
 var Transaction = require('../models/models.js').transaction;
+var TransactionValidator = require('../validators/transaction-validator.js');
 
 var TransactionController = {
 
@@ -10,12 +11,20 @@ var TransactionController = {
         var data = req.body;
 
         if(data.userid) {
-            Transaction.create(data)
-                .then(function(result) {
-                    res.json(result);
+
+            TransactionValidator.validate(data)
+                .then(function() {
+                    Transaction.create(data)
+                        .then(function(result) {
+                            res.json(result);
+                        })
+                        .catch(function(error) {
+                            res.status(500).json(error);
+                        });
                 })
                 .catch(function(error) {
-                    res.status(500).json(error);
+                    console.log(error);
+                   res.status(500).json(error);
                 });
         }
 
