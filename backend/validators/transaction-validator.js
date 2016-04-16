@@ -4,6 +4,7 @@
 
 var Transaction = require('../models/models.js').transaction;
 var Promise = require('bluebird');
+var BigNumber = require('bignumber.js');
 
 var TransactionValidator = {
     validate: function(data) {
@@ -75,7 +76,10 @@ var TransactionValidator = {
                return;
            }
 
-            if(data.amount > result) {
+            var amount = new BigNumber(data.amount);
+            var balance = new BigNumber(result);
+
+            if(amount.greaterThan(balance)) {
                 _result.msg = 'Cannot exceed account balance!';
                 callback(true, _result);
                 return;
