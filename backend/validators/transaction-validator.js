@@ -75,11 +75,11 @@ var TransactionValidator = {
                return;
            }
 
-           if(data.amount > result) {
-               _result.msg = 'Cannot exceed account balance!';
-               callback(true, _result);
-               return;
-           }
+            if(data.amount > result) {
+                _result.msg = 'Cannot exceed account balance!';
+                callback(true, _result);
+                return;
+            }
 
             callback(false, null);
 
