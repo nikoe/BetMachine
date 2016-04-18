@@ -6,7 +6,7 @@
         <h3>{{date.date | date:'fullDate'}}</h3>
         <div class="panel panel-primary" ng-repeat="match in date.matches">
             <div class="panel-heading match">
-                <p class="time"> {{match.start_time}}</p>
+                <p class="time"> {{match.start_time | date:'HH:mm'}}</p>
                 <p class="title">{{match.name}}</p>
             </div>
             <div class="panel-body">
