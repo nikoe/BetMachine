@@ -1,1 +1,5 @@
 insert into users (user_id, firstname, surname, birthday, address, postalcode, city, country, username, password) values ('b05c81c3-4fdb-459a-b71d-0395aad47471', 'Testi', 'Testinen', '1991-01-06', 'Testikatu', '00320', 'Helsinki', 'Finland', 'testi', '$2a$10$inKtTfgkxCv8qwHemcQxz.eRRqvPploJSouPIsSpt3n1oDzye3v72');
+
+insert into matches (creator_id, start_time, close_time, name) values( '777a6daa-45f6-49a3-847b-1cab367da141', now() + '2 day'::interval, (now() + '2 day'::interval) + '1 h'::interval, 'Barcelona - Real Madrid')
+insert into matches (creator_id, start_time, close_time, name) values( '777a6daa-45f6-49a3-847b-1cab367da141', now() + '2 day'::interval, (now() + '2 day'::interval) + '1 h'::interval, 'HIFK - Jokerit')
+insert into matches (creator_id, start_time, close_time, name) values( '777a6daa-45f6-49a3-847b-1cab367da141', now() + '2 day'::interval, (now() + '2 day'::interval) + '1 h'::interval, 'Minnesota Wild - Dallas Stars')

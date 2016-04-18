@@ -9,12 +9,6 @@ app.controller('MatchController', ['$scope', 'MatchService', 'AlertFactory',
 
         $scope.dates = [];
 
-        MatchService.getAll()
-            .then(function(results) {
-                $scope.matches = results;
-            });
-
-
         var loadUpcomingMatchDates = function() {
             $scope.dates = [];
             MatchService.findUpcomingMatchDates()
