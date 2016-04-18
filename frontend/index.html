@@ -17,11 +17,14 @@
     <script src="app.js"></script>
     <script src="factories/authentication-factory.js"></script>
     <script src="services/account-service.js"></script>
+    <script src="services/transaction-service.js"></script>
+    <script src="services/match-service.js"></script>
     <script src="controllers/main-controller.js"></script>
     <script src="controllers/login-controller.js"></script>
     <script src="controllers/nav-account-controller.js"></script>
     <script src="controllers/my-account-controller.js"></script>
     <script src="controllers/signup-controller.js"></script>
+    <script src="controllers/match-controller.js"></script>
     <script src="factories/alert-factory.js"></script>
 
     <base href="/">
@@ -38,7 +41,13 @@
                 </button>
                 <a class="navbar-brand" ui-sref="index">BetMachine</a>
             </div>
+
             <div id="navbar" class="navbar-collapse collapse">
+
+                <ul class="nav navbar-nav">
+                    <li><a ui-sref="matches">Matches</a></li>
+                </ul>
+
                 <div class="navbar-right">
                     <div ng-controller="LoginController">
                         <form class="navbar-form" ng-if="!isLogged()">

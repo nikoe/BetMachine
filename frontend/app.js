@@ -45,6 +45,19 @@ var app = angular.module('app', ['ngResource', 'ui.bootstrap', 'ui.router', 'ncy
                 ncyBreadcrumb: {
                     label: 'My Account'
                 }
+            })
+            .state('matches', {
+                url: '/matches',
+                templateUrl: 'views/match-list.html',
+                controller: 'MatchController',
+                access: {
+                    requireLogin: false,
+                    preventIfLoggedIn: false
+                },
+                ncyBreadcrumb: {
+                    label: 'Matches'
+                }
+
             });
         $urlRouterProvider.otherwise("/");
 }]);

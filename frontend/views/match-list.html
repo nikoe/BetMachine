@@ -1,0 +1,19 @@
+<div ng-controller="MatchController">
+    <h1>Matches</h1>
+
+
+    <div ng-repeat="date in dates">
+        <h3>{{date.date | date:'fullDate'}}</h3>
+        <div class="panel panel-primary" ng-repeat="match in date.matches">
+            <div class="panel-heading match">
+                <div class="col-sm12">
+                    <p class="time"> {{match.start_time | date:'HH:mm'}}</p>
+                    <p class="title">{{match.name}}</p>
+                    <button class="btn btn-danger delete" ng-click="delete(match.match_id)">Delete</button>
+                </div>
+            </div>
+            <div class="panel-body">
+            </div>
+        </div>
+    </div>
+</div>

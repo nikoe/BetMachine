@@ -2,6 +2,7 @@ var express  = require('express');
 var app      = express();
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
+//var morgan = require('morgan');
 
 // configuration =================
 app.set('port', (process.env.PORT || 5000));

@@ -1,4 +1,5 @@
 var User = require('../models/models.js').user;
+var PasswordCrypt = require('../helpers/password-crypt.js');
 
 var UserController = {
     index: function(req, res) {
@@ -45,7 +46,24 @@ var UserController = {
             });
     },
     create: function(req, res) {
+        if((req.body.username && req.body.password) && (req.body.username.length > 0 && req.body.password.length > 0)) {
+            var password = PasswordCrypt.cryptPassword(req.body.password, function(error, result) {
+                var data = {
+                    username: req.body.username,
+                    password: result
+                };
 
+                User.createUserData(data)
+                    .then(function(result) {
+                        res.json(result);
+                    })
+                    .catch(function(error) {
+                        res.status(409).json(error);
+                    });
+            });
+        }else {
+            res.status(400).json({msg: 'Username and password required!'});
+        }
     }
 };
 
