@@ -26,3 +26,17 @@ transaction_type text NOT NULL,
 CONSTRAINT transactions_pkey PRIMARY KEY (transaction_id),
 CONSTRAINT transactions_user_fkey FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
+
+CREATE TABLE matches
+(
+match_id uuid NOT NULL DEFAULT uuid_generate_v4(),
+creator_id uuid NOT NULL,
+start_time timestamp NOT NULL,
+end_time timestamp NOT NULL,
+close_time timestamp NOT NULL,
+name text NOT NULL,
+description text,
+status text NOT NULL DEFAULt 'NOT_STARTED',
+CONSTRAINT matches_pkey PRIMARY KEY (match_id),
+CONSTRAINT matches_creator_id_fkey FOREIGN KEY (creator_id) REFERENCES users (user_id)
+);

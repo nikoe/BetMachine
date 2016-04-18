@@ -1,0 +1,12 @@
+.match {
+
+}
+
+.match p {
+    display: inline;
+    margin: 0;
+}
+
+.match p.title {
+    margin-left: 30px;
+}
