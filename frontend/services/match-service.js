@@ -15,7 +15,7 @@ app.service('MatchService', ['$http', '$q', '$rootScope','$location',
                         reject(error);
                     });
             });
-        }
+        };
 
         this.findUpcomingMatchDates = function() {
             return $q(function(resolve, reject) {
@@ -27,7 +27,7 @@ app.service('MatchService', ['$http', '$q', '$rootScope','$location',
                         reject(error);
                     });
             });
-        }
+        };
 
         this.findUpcomingMatchesByDate = function(date) {
             return $q(function(resolve, reject) {
@@ -39,7 +39,18 @@ app.service('MatchService', ['$http', '$q', '$rootScope','$location',
                         reject(error);
                     });
             });
-        }
+        };
 
+        this.deleteById = function(matchid) {
+            return $q(function(resolve, reject) {
+                $http.delete($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/api/matches/' + matchid)
+                    .success(function (result) {
+                        resolve(result);
+                    })
+                    .error(function (error) {
+                        reject(error);
+                    });
+            });
+        };
     }
 ]);

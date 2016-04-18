@@ -99,7 +99,7 @@ module.exports = function(connectionString) {
                         done();
                         reject();
                     } else {
-                        var query = client.query("select name, start_time from matches where start_time >= $1 and start_time <= date(date($1) + '1 day'::interval) order by start_time", [date]);
+                        var query = client.query("select name, start_time, match_id from matches where start_time >= $1 and start_time <= date(date($1) + '1 day'::interval) order by start_time", [date]);
 
                         //if error reject
                         query.on('error', function(err) {
@@ -116,6 +116,40 @@ module.exports = function(connectionString) {
                         query.on('end', function () {
                             done();
                             resolve(results);
+                        });
+                    }
+                });
+
+            });
+        },
+        deleteById: function(matchid) {
+            return new Promise(function(resolve, reject) {
+                var result = {};
+
+                pg.connect(connectionString, function(err, client, done) {
+                    // Handle connection errors
+                    if(err) {
+                        done();
+                        reject();
+                    }
+
+                    if(client == null) {
+                        done();
+                        reject();
+                    } else {
+                        var query = client.query("delete from matches where match_id = $1", [matchid]);
+
+                        //if error reject
+                        query.on('error', function(err) {
+                            done();
+                            reject();
+                        });
+
+                        // After all data is returned, close connection and return results
+                        query.on('end', function () {
+                            done();
+                            result.msg = 'Match deleted succesfully!';
+                            resolve(result);
                         });
                     }
                 });

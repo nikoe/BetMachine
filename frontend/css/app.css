@@ -10,3 +10,8 @@
 .match p.title {
     margin-left: 10px;
 }
+
+.match button.delete {
+    float: right;
+    margin-top: -7px;
+}

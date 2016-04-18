@@ -28,6 +28,15 @@ var MatchController = {
             .then(function(results) {
                 res.json(results);
             })
+    },
+    deleteById: function(req, res) {
+        var matchid = req.params.matchid;
+        if(matchid) {
+            Match.deleteById(matchid)
+                .then(function(result) {
+                    res.json(result);
+                })
+        }
     }
 
 };
