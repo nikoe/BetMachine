@@ -32,7 +32,7 @@ CREATE TABLE matches
 match_id uuid NOT NULL DEFAULT uuid_generate_v4(),
 creator_id uuid NOT NULL,
 start_time timestamp NOT NULL,
-end_time timestamp NOT NULL,
+end_time timestamp,
 close_time timestamp NOT NULL,
 name text NOT NULL,
 description text,
