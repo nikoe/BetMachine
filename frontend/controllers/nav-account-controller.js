@@ -22,6 +22,10 @@ app.controller('NavAccountController', ['$scope', 'AuthenticationFactory','UserA
             return AuthenticationFactory.isLogged;
         };
 
+        $scope.isAdmin = function() {
+            return AuthenticationFactory.isAdmin;
+        };
+
         $scope.logout = function() {
             UserAuthFactory.logout();
             $scope.userId = '';

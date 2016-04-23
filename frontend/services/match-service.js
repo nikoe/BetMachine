@@ -43,7 +43,7 @@ app.service('MatchService', ['$http', '$q', '$rootScope','$location', 'Authentic
 
         this.deleteById = function(matchid) {
             return $q(function(resolve, reject) {
-                if(AuthenticationFactory.isLogged && $window.sessionStorage.userRole.toLocaleLowerCase() == 'admin') {
+                if(AuthenticationFactory.isAdmin) {
                     $http.delete($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/api/matches/' + matchid)
                         .success(function (result) {
                             resolve(result);
@@ -56,5 +56,27 @@ app.service('MatchService', ['$http', '$q', '$rootScope','$location', 'Authentic
                 }
             });
         };
+
+        this.create = function(data) {
+            return $q(function(resolve, reject) {
+                if (AuthenticationFactory.isAdmin) {
+                    data.creator_id = $window.sessionStorage.userId;
+
+                    var close_time = new Date(data.start_time);
+                    close_time.setMinutes(close_time.getMinutes() - 1);
+                    data.close_time = close_time;
+
+                    $http.post($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/api/matches/', data)
+                        .success(function (result) {
+                            resolve(result);
+                        })
+                        .error(function (error) {
+                            reject(error);
+                        });
+                }else {
+                    reject({msg: 'Not authorized!'});
+                }
+            });
+        }
     }
 ]);

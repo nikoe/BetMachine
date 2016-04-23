@@ -9,6 +9,23 @@ app.controller('MatchController', ['$scope', 'MatchService', 'AlertFactory', 'Au
 
         $scope.dates = [];
 
+        $scope.newmatch = {
+            name: '',
+            description: '',
+            start_time: ''
+        };
+
+        $scope.startTimePicker = {
+            opened: false,
+            open: function() {
+                this.opened = true;
+            },
+            options: {
+                showMeridian: false,
+                minuteStep: 5
+            }
+        };
+
         var loadUpcomingMatchDates = function() {
             $scope.dates = [];
             MatchService.findUpcomingMatchDates()
@@ -33,7 +50,7 @@ app.controller('MatchController', ['$scope', 'MatchService', 'AlertFactory', 'Au
         loadUpcomingMatchDates();
 
         $scope.isAdmin = function() {
-            return (AuthenticationFactory.isLogged && $window.sessionStorage.userRole.toLowerCase() == 'admin');
+            return (AuthenticationFactory.isAdmin);
         }
 
 
@@ -44,6 +61,22 @@ app.controller('MatchController', ['$scope', 'MatchService', 'AlertFactory', 'Au
                 .then(function(result) {
                     AlertFactory.add('success', result.msg, 'fa fa-check');
                     loadUpcomingMatchDates();
+                }, function(error) {
+                    AlertFactory.clearAll();
+                    AlertFactory.add('danger', error.msg, 'fa fa-ban');
+                });
+        };
+
+        $scope.create = function() {
+            MatchService.create($scope.newmatch)
+                .then(function(result) {
+                    $scope.newmatch = {
+                        name: '',
+                        description: '',
+                        start_time: ''
+                    };
+                    AlertFactory.add('success', result.msg, 'fa fa-check');
+
                 }, function(error) {
                     AlertFactory.clearAll();
                     AlertFactory.add('danger', error.msg, 'fa fa-ban');

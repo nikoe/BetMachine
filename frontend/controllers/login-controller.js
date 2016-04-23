@@ -18,13 +18,16 @@ app.controller('LoginController', ['$scope', '$window', '$location', 'UserAuthFa
 
                     AuthenticationFactory.isLogged = true;
                     AuthenticationFactory.user = data.data.user.username;
-                    AuthenticationFactory.userRole = data.data.user.role;
                     AuthenticationFactory.userId = data.data.user_id;
 
                     $window.sessionStorage.token = data.data.token;
                     $window.sessionStorage.user = data.data.user.username;
-                    $window.sessionStorage.userRole = data.data.user.role;
                     $window.sessionStorage.userId = data.data.user.user_id;
+
+                    if(data.data.user.role == 'ADMIN') {
+                        AuthenticationFactory.isAdmin = true;
+                        $window.sessionStorage.role = 'ADMIN';
+                    }
 
                     $scope.user.username = '';
                     $scope.user.password = '';

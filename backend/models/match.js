@@ -155,6 +155,47 @@ module.exports = function(connectionString) {
                 });
 
             });
+        },
+        create: function(data) {
+            return new Promise(function(resolve, reject) {
+                var result = {};
+
+                pg.connect(connectionString, function(err, client, done) {
+                    if (err) {
+                        reject(result);
+                        return;
+                    }
+
+                    if(client == null) {
+                        done();
+                        reject(result);
+                        return;
+                    } else {
+
+                        client.query("insert into matches (creator_id, name, description, start_time, status, close_time ) values ($1, $2, $3, $4, $5, $6)", [data.creator_id, data.name, data.description, data.start_time, 'NOT_STARTED', data.close_time]);
+
+                        var query = client.query("select coalesce(sum(amount), 0.00) as balance from transactions where user_id = $1", [data.userid]);
+
+                        query.on('error', function(err) {
+                            done();
+                            reject(result);
+                            return;
+                        });
+
+                        query.on('row', function(row) {
+                            result = row;
+                        });
+
+                        query.on('end', function() {
+                            done();
+                            result.msg = "Match created successfully!";
+                            resolve(result);
+                            return;
+                        });
+
+                    }
+                });
+            });
         }
 
     };

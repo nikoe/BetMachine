@@ -37,6 +37,16 @@ var MatchController = {
                     res.json(result);
                 })
         }
+    },
+    create: function(req, res) {
+        var data = req.body;
+        Match.create(data)
+            .then(function(result) {
+                res.json(result);
+            })
+            .catch(function(error) {
+                res.status(500).json(error);
+            });
     }
 
 };

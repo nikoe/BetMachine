@@ -20,6 +20,7 @@ router.get('/matches', matchController.index);
 router.get('/matches/dates', matchController.findUpcomingMatches);
 router.get('/matches/dates/:date', matchController.findUpcomingMatchesByDate);
 router.delete('/matches/:matchid', matchController.deleteById)
+router.post('/matches', [require('../middlewares/validaterequest')], matchController.create);
 
 
 router.post('/auth', authController.auth);

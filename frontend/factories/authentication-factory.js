@@ -4,6 +4,7 @@
 app.factory('AuthenticationFactory', function($window) {
     var auth = {
         isLogged: false,
+        isAdmin: false,
 
         check: function() {
             if($window.sessionStorage.token && $window.sessionStorage.user) {
@@ -29,13 +30,13 @@ app.factory('UserAuthFactory', function($window, $location, $http, Authenticatio
         logout: function() {
             if(AuthenticationFactory.isLogged) {
                 AuthenticationFactory.isLogged = false;
+                AuthenticationFactory.isAdmin = false;
                 delete AuthenticationFactory.user;
-                delete AuthenticationFactory.userRole;
                 delete AuthenticationFactory.userId;
                 delete $window.sessionStorage.token;
                 delete $window.sessionStorage.user;
-                delete $window.sessionStorage.userRole;
                 delete $window.sessionStorage.userId;
+                delete $window.sessionStorage.role;
 
                 $state.go("index");
             }
