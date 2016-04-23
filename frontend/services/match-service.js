@@ -2,8 +2,8 @@
  * Created by Niko on 18.4.2016.
  */
 
-app.service('MatchService', ['$http', '$q', '$rootScope','$location',
-    function($http, $q, $rootScope, $location) {
+app.service('MatchService', ['$http', '$q', '$rootScope','$location', 'AuthenticationFactory', '$window',
+    function($http, $q, $rootScope, $location, AuthenticationFactory, $window) {
 
         this.getAll = function() {
             return $q(function(resolve, reject) {
@@ -43,13 +43,17 @@ app.service('MatchService', ['$http', '$q', '$rootScope','$location',
 
         this.deleteById = function(matchid) {
             return $q(function(resolve, reject) {
-                $http.delete($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/api/matches/' + matchid)
-                    .success(function (result) {
-                        resolve(result);
-                    })
-                    .error(function (error) {
-                        reject(error);
-                    });
+                if(AuthenticationFactory.isLogged && $window.sessionStorage.userRole.toLocaleLowerCase() == 'admin') {
+                    $http.delete($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/api/matches/' + matchid)
+                        .success(function (result) {
+                            resolve(result);
+                        })
+                        .error(function (error) {
+                            reject(error);
+                        });
+                }else {
+                    reject({msg: 'Not authorized!'});
+                }
             });
         };
     }

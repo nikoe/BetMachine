@@ -85,7 +85,7 @@ module.exports = function(connectionString) {
                         done();
                         reject(result);
                     } else {
-                        var query = client.query("SELECT user_id, username, password FROM users WHERE username = $1", [username]);
+                        var query = client.query("SELECT user_id, username, password, role FROM users WHERE username = $1", [username]);
 
                         query.on('error', function(err) {
                             done();

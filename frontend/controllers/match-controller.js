@@ -2,8 +2,8 @@
  * Created by Niko on 18.4.2016.
  */
 
-app.controller('MatchController', ['$scope', 'MatchService', 'AlertFactory',
-    function($scope, MatchService, AlertFactory) {
+app.controller('MatchController', ['$scope', 'MatchService', 'AlertFactory', 'AuthenticationFactory', '$window',
+    function($scope, MatchService, AlertFactory, AuthenticationFactory, $window) {
 
         $scope.matches = [];
 
@@ -28,9 +28,13 @@ app.controller('MatchController', ['$scope', 'MatchService', 'AlertFactory',
 
                     });
                 });
-        }
+        };
 
         loadUpcomingMatchDates();
+
+        $scope.isAdmin = function() {
+            return (AuthenticationFactory.isLogged && $window.sessionStorage.userRole.toLowerCase() == 'admin');
+        }
 
 
         $scope.delete = function(matchid) {
@@ -40,6 +44,9 @@ app.controller('MatchController', ['$scope', 'MatchService', 'AlertFactory',
                 .then(function(result) {
                     AlertFactory.add('success', result.msg, 'fa fa-check');
                     loadUpcomingMatchDates();
+                }, function(error) {
+                    AlertFactory.clearAll();
+                    AlertFactory.add('danger', error.msg, 'fa fa-ban');
                 });
         }
 

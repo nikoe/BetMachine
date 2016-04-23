@@ -48,7 +48,7 @@ var AuthController = {
                                 var data = {};
                                 data.username = result.username;
                                 data.user_id = result.user_id;
-                                data.role = "admin";
+                                data.role = result.role;
                                 resolve(genToken(data));
                            } else {
                                reject({data : 'Invalid Credentials'});
