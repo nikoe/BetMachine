@@ -93,6 +93,11 @@ app.service('MatchService', ['$http', '$q', '$rootScope','$location', 'Authentic
 
         this.updateById = function(id, data) {
             return $q(function(resolve, reject) {
+
+                var close_time = new Date(data.start_time);
+                close_time.setMinutes(close_time.getMinutes() - 1);
+                data.close_time = close_time;
+
                 $http.put($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/api/matches/' + id, data)
                     .success(function (result) {
                         resolve(result);

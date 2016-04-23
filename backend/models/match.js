@@ -248,7 +248,7 @@ module.exports = function(connectionString) {
                         done();
                         reject(result);
                     } else {
-                        client.query("update matches set name = ($2), description = ($3), start_time = ($4) where match_id = ($1)", [matchid, data.name, data.description, data.start_time]);
+                        client.query("update matches set name = ($2), description = ($3), start_time = ($4), close_time = ($5) where match_id = ($1)", [matchid, data.name, data.description, data.start_time, data.close_time]);
 
                         var query = client.query("select name, start_time, match_id, description from matches where match_id = $1", [matchid]);
 
