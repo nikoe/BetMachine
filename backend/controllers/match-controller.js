@@ -47,6 +47,27 @@ var MatchController = {
             .catch(function(error) {
                 res.status(500).json(error);
             });
+    },
+    findById: function(req, res) {
+        var matchid = req.params.matchid;
+        if(matchid) {
+            Match.findById(matchid)
+                .then(function(result) {
+                    res.json(result);
+                })
+                .catch(function(error) {
+                    res.status(404).json(error);
+                });
+        }
+    },
+    save: function(req, res) {
+        var matchid = req.params.matchid;
+        if(matchid) {
+            Match.updateMatchDataById(req.params.matchid, req.body)
+                .then(function(result) {
+                    res.json(result);
+                });
+        }
     }
 
 };

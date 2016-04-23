@@ -9,7 +9,8 @@
                 <div class="col-sm12">
                     <p class="time"> {{match.start_time | date:'HH:mm'}}</p>
                     <p class="title">{{match.name}}</p>
-                    <button class="btn btn-danger delete" ng-click="delete(match.match_id)" ng-if="isAdmin()">Delete</button>
+                    <button class="btn btn-danger" ng-click="delete(match.match_id)" ng-if="isAdmin()">Delete</button>
+                    <button class="btn btn-success" ng-click="update(match.match_id)" ng-if="isAdmin()">Update</button>
                 </div>
             </div>
             <div class="panel-body">

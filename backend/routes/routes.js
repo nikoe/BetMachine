@@ -19,7 +19,9 @@ router.get('/transactions/:userid', [require('../middlewares/validaterequest'), 
 router.get('/matches', matchController.index);
 router.get('/matches/dates', matchController.findUpcomingMatches);
 router.get('/matches/dates/:date', matchController.findUpcomingMatchesByDate);
-router.delete('/matches/:matchid', matchController.deleteById)
+router.delete('/matches/:matchid', matchController.deleteById);
+router.get('/matches/:matchid', matchController.findById);
+router.put('/matches/:matchid', [require('../middlewares/validaterequest')], matchController.save);
 router.post('/matches', [require('../middlewares/validaterequest')], matchController.create);
 
 

@@ -80,6 +80,21 @@ var app = angular.module('app', ['ngResource', 'ui.bootstrap', 'ui.router', 'ncy
                     label: 'New'
                 }
 
+            })
+            .state('matches.details', {
+                url: '/:matchid',
+                templateUrl: '../views/match-details.html',
+                controller: 'MatchDetailsController',
+                access: {
+                    requireLogin: false,
+                    preventIfLoggedIn: false,
+                    requireAdmin: true
+                },
+                ncyBreadcrumb: {
+                    parent: 'matches.list',
+                    label: 'Details'
+                }
+
             });
         $urlRouterProvider.otherwise("/");
         //$locationProvider.html5Mode(true);

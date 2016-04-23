@@ -196,8 +196,81 @@ module.exports = function(connectionString) {
                     }
                 });
             });
-        }
+        },
+        findById: function(id) {
+            return new Promise(function (resolve, reject) {
+                var result = {};
 
+                pg.connect(connectionString, function (err, client, done) {
+                    // Handle connection errors
+                    if (err) {
+                        done();
+                        reject();
+                    }
+
+                    if (client == null) {
+                        done();
+                        reject();
+                    } else {
+                        var query = client.query("select name, start_time, match_id, description from matches where match_id = $1", [id]);
+
+                        //if error reject
+                        query.on('error', function (err) {
+                            done();
+                            reject();
+                        });
+
+                        // Stream results back one row at a time
+                        query.on('row', function (row) {
+                            result = row;
+                        });
+
+                        // After all data is returned, close connection and return results
+                        query.on('end', function () {
+                            done();
+                            resolve(result);
+                        });
+                    }
+                });
+
+            });
+        },
+        updateMatchDataById: function(matchid, data) {
+            return new Promise(function(resolve, reject) {
+                var result = {};
+
+                pg.connect(connectionString, function(err, client, done) {
+                    if (err) {
+                        reject(result);
+                    }
+
+                    if(client == null) {
+                        done();
+                        reject(result);
+                    } else {
+                        client.query("update matches set name = ($2), description = ($3), start_time = ($4) where match_id = ($1)", [matchid, data.name, data.description, data.start_time]);
+
+                        var query = client.query("select name, start_time, match_id, description from matches where match_id = $1", [matchid]);
+
+                        query.on('error', function(err) {
+                            done();
+                            reject(result);
+                        });
+
+                        query.on('row', function(row) {
+                            result.match = row;
+                        });
+
+                        query.on('end', function() {
+                            done();
+                            result.msg = 'Match details updated!';
+                            resolve(result);
+                        });
+
+                    }
+                });
+            });
+        }
     };
 
     return match;

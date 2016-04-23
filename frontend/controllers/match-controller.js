@@ -2,8 +2,8 @@
  * Created by Niko on 18.4.2016.
  */
 
-app.controller('MatchController', ['$scope', 'MatchService', 'AlertFactory', 'AuthenticationFactory', '$window',
-    function($scope, MatchService, AlertFactory, AuthenticationFactory, $window) {
+app.controller('MatchController', ['$scope', 'MatchService', 'AlertFactory', 'AuthenticationFactory', '$window', '$state',
+    function($scope, MatchService, AlertFactory, AuthenticationFactory, $window, $state) {
 
         $scope.matches = [];
 
@@ -81,7 +81,11 @@ app.controller('MatchController', ['$scope', 'MatchService', 'AlertFactory', 'Au
                     AlertFactory.clearAll();
                     AlertFactory.add('danger', error.msg, 'fa fa-ban');
                 });
-        }
+        };
+
+        $scope.update = function(matchid) {
+            $state.go('matches.details', {matchid: matchid});
+        };
 
     }
 ]);

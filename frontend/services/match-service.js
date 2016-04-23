@@ -77,6 +77,30 @@ app.service('MatchService', ['$http', '$q', '$rootScope','$location', 'Authentic
                     reject({msg: 'Not authorized!'});
                 }
             });
+        };
+
+        this.findById = function(id) {
+            return $q(function(resolve, reject) {
+                $http.get($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/api/matches/' + id)
+                    .success(function (result) {
+                        resolve(result);
+                    })
+                    .error(function (error) {
+                        reject(error);
+                    });
+            });
+        };
+
+        this.updateById = function(id, data) {
+            return $q(function(resolve, reject) {
+                $http.put($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/api/matches/' + id, data)
+                    .success(function (result) {
+                        resolve(result);
+                    })
+                    .error(function (error) {
+                        reject(error);
+                    });
+            });
         }
     }
 ]);
