@@ -16,3 +16,66 @@
     margin-top: -7px;
     margin-left: 5px;
 }
+
+.date {
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+
+@media (min-width: 992px) {
+    .betslip {
+        margin-top: -75px;
+    }
+}
+
+.betslip .panel-footer {
+    background-color: #F5F5F5;
+
+}
+
+.betslip .panel-heading {
+    padding-bottom: 0;
+    font-weight: bold;
+}
+
+.betslip .panel-body {
+    background-color: #F5F5F5;
+}
+
+.betslip .target p {
+    margin-top: -10px;
+    margin-left: 10px;
+    padding: 0;
+}
+
+.betslip .odd {
+    text-align: right;
+}
+
+.betslip .bet {
+    padding-bottom: 10px;
+}
+
+.betslip .delete {
+    display: inline;
+    margin-left: 5px;
+    font-size: medium;
+}
+
+.betslip .bet p {
+    margin-top: 5px;
+}
+
+.betslip .pay {
+    margin-top: 10px;
+}
+
+.betslip .pay button {
+    width: 100%;
+    font-weight: bold;
+}
+
+.right {
+    float: right;
+}

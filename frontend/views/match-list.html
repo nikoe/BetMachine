@@ -1,20 +1,85 @@
 <div ng-controller="MatchController">
     <h1>Matches</h1>
 
-
-    <div ng-repeat="date in dates">
-        <h3>{{date.date | date:'fullDate'}}</h3>
-        <div class="panel panel-primary" ng-repeat="match in date.matches">
-            <div class="panel-heading match">
-                <div class="col-sm12">
-                    <p class="time"> {{match.start_time | date:'HH:mm'}}</p>
-                    <p class="title">{{match.name}}</p>
-                    <button class="btn btn-danger" ng-click="delete(match.match_id)" ng-if="isAdmin()">Delete</button>
-                    <button class="btn btn-success" ng-click="update(match.match_id)" ng-if="isAdmin()">Update</button>
+    <div class="row">
+        <div class="col-md-8">
+            <div ng-repeat="date in dates">
+                <h3 class="date">{{date.date | date:'fullDate'}}</h3>
+                <div class="panel panel-primary" ng-repeat="match in date.matches">
+                    <div class="panel-heading match">
+                        <div class="col-sm12">
+                            <p class="time"> {{match.start_time | date:'HH:mm'}}</p>
+                            <p class="title">{{match.name}}</p>
+                            <button class="btn btn-danger" ng-click="delete(match.match_id)" ng-if="isAdmin()">Delete</button>
+                            <button class="btn btn-success" ng-click="update(match.match_id)" ng-if="isAdmin()">Update</button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                    </div>
                 </div>
             </div>
-            <div class="panel-body">
+        </div>
+        <div class="col-md-4 betslip" ng-controller="BetslipController">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <p>BETSLIP</p>
+                </div>
+                <div class="panel-body">
+                    <div class="row" ng-repeat="bet in bets">
+                        <div class="col-md-8 col-xs-8">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p><b>{{bet.name}}</b></p>
+                                </div>
+                            </div>
+                            <div class="row target">
+                                <div class="col-md-12">
+                                    <p>Mark: {{bet.mark}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-xs-4">
+                            <p class="odd right">{{bet.odd}} <i class="fa fa-times delete text-danger" aria-hidden="true"></i></p>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <p>Total odds</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="odd right">10.00</p>
+                        </div>
+                    </div>
+                    <div class="row bet">
+                        <div class="col-md-6">
+                            <p>Stake</p>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group right">
+                                <span class="input-group-addon" id="basic-addon1">€</span>
+                                <input type="text" class="form-control" aria-describedby="basic-addon1">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <p>Potential win</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="odd right">100.51</p>
+                        </div>
+                    </div>
+                    <div class="row pay">
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-success pay">Place bet</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
 </div>
