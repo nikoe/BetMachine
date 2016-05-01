@@ -60,7 +60,13 @@
 .betslip .delete {
     display: inline;
     margin-left: 5px;
-    font-size: medium;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.betslip input::-webkit-outer-spin-button,
+.betslip input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
 }
 
 .betslip .bet p {
