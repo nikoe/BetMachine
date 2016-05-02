@@ -12,7 +12,17 @@ app.controller('MatchController', ['$scope', 'MatchService', 'AlertFactory', 'Au
         $scope.newmatch = {
             name: '',
             description: '',
-            start_time: ''
+            start_time: '',
+            probabilities: [{
+                mark: '1',
+                probability: 0
+            },{
+                mark: 'X',
+                probability: 0
+            },{
+                mark: '2',
+                probability: 0
+            }]
         };
 
         $scope.startTimePicker = {
@@ -38,6 +48,14 @@ app.controller('MatchController', ['$scope', 'MatchService', 'AlertFactory', 'Au
 
                         MatchService.findUpcomingMatchesByDate(date.date)
                             .then(function (matches) {
+                                matches.forEach(function(match) {
+                                   match.odds = [];
+                                   MatchService.findOddsByMatchId(match.match_id)
+                                       .then(function(result) {
+                                           match.odds = result;
+                                       });
+                                });
+
                                 data.matches = matches;
                             })
 
@@ -73,8 +91,19 @@ app.controller('MatchController', ['$scope', 'MatchService', 'AlertFactory', 'Au
                     $scope.newmatch = {
                         name: '',
                         description: '',
-                        start_time: ''
+                        start_time: '',
+                        probabilities: [{
+                            mark: '1',
+                            probability: '0'
+                        },{
+                            mark: 'X',
+                            probability: '0'
+                        },{
+                            mark: '2',
+                            probability: '0'
+                        }]
                     };
+
                     AlertFactory.add('success', result.msg, 'fa fa-check');
 
                 }, function(error) {
@@ -86,6 +115,5 @@ app.controller('MatchController', ['$scope', 'MatchService', 'AlertFactory', 'Au
         $scope.update = function(matchid) {
             $state.go('matches.details', {matchid: matchid});
         };
-
     }
 ]);

@@ -172,8 +172,36 @@ module.exports = function(connectionString) {
                         return;
                     } else {
 
-                        client.query("insert into matches (creator_id, name, description, start_time, status, close_time ) values ($1, $2, $3, $4, $5, $6)", [data.creator_id, data.name, data.description, data.start_time, 'NOT_STARTED', data.close_time]);
+                        client.query("insert into matches (creator_id, name, description, start_time, status, close_time ) values ($1, $2, $3, $4, $5, $6) RETURNING match_id", [data.creator_id, data.name, data.description, data.start_time, 'NOT_STARTED', data.close_time], function(err, result) {
 
+                            if(err) {
+                                done();
+                                reject();
+                                return;
+                            }
+
+                            var matchid = result.rows[0].match_id;
+
+                            var probabilities = data.probabilities;
+
+                            probabilities.forEach(function(probability) {
+                                if(probability.probability == null) {
+                                    probability.probability = 0;
+                                }
+                                if(probability.probability == 0) {
+                                    factor = 1.00;
+                                }else {
+                                    var factor = (1.00/probability.probability) * 100.00;
+                                }
+                                client.query("insert into odds (name, match_id, probability, factor) values($1, $2, $3, round($4, 2))", [probability.mark, matchid, probability.probability, factor]);
+                            });
+
+                            result.msg = "Match created successfully!";
+                            resolve(result);
+                            return;
+
+                        });
+                        /*
                         var query = client.query("select coalesce(sum(amount), 0.00) as balance from transactions where user_id = $1", [data.userid]);
 
                         query.on('error', function(err) {
@@ -192,7 +220,7 @@ module.exports = function(connectionString) {
                             resolve(result);
                             return;
                         });
-
+                        */
                     }
                 });
             });

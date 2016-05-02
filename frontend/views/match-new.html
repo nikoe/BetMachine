@@ -23,6 +23,45 @@
             </p>
         </div>
 
+        <div class="panel panel-default oddpanel">
+            <div class="panel-heading">
+                Probabilities
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-4 col-xs-4">
+                        <p>1</p>
+                    </div>
+                    <div class="col-md-4 col-xs-4">
+                        <p>X</p>
+                    </div>
+                    <div class="col-md-4 col-xs-4">
+                        <p>2</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-xs-4">
+                        <div class="input-group">
+                            <input type="number" class="form-control" aria-describedby="basic-addon1" min="0" max="100" ng-model="newmatch.probabilities[0].probability">
+                            <span class="input-group-addon" id="basic-addon1">%</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-xs-4">
+                        <div class="input-group">
+                            <input type="number" class="form-control" aria-describedby="basic-addon1" min="0" max="100" ng-model="newmatch.probabilities[1].probability">
+                            <span class="input-group-addon" id="basic-addon1">%</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-xs-4">
+                        <div class="input-group">
+                            <input type="number" class="form-control" aria-describedby="basic-addon1" min="0" max="100" ng-model="newmatch.probabilities[2].probability">
+                            <span class="input-group-addon" id="basic-addon1">%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <button type="button" class="btn btn-success" ng-click="create()"><i class="fa fa-pencil"></i> Create Match</button>
     </form>
 </div>

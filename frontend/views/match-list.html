@@ -14,7 +14,23 @@
                             <button class="btn btn-success" ng-click="update(match.match_id)" ng-if="isAdmin()">Update</button>
                         </div>
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body oddpanel">
+                        <div class="row">
+                            <div class="col-md-4 col-xs-4" ng-repeat="odd in match.odds">
+                               <div class="row">
+                                   <div class="col-xs-12 col-md-12">
+                                       <p>{{odd.name}}</p>
+                                   </div>
+                               </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-12">
+                                        <button type="button" class="btn btn-success">
+                                            {{odd.factor}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

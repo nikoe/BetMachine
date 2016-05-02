@@ -91,6 +91,18 @@ app.service('MatchService', ['$http', '$q', '$rootScope','$location', 'Authentic
             });
         };
 
+        this.findOddsByMatchId = function(matchid) {
+            return $q(function(resolve, reject) {
+                $http.get($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/api/matches/' + matchid + '/odds')
+                    .success(function (result) {
+                        resolve(result);
+                    })
+                    .error(function (error) {
+                        reject(error);
+                    });
+            });
+        };
+
         this.updateById = function(id, data) {
             return $q(function(resolve, reject) {
 

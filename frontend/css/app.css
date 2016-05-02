@@ -82,6 +82,27 @@
     font-weight: bold;
 }
 
+.oddpanel p {
+    text-align: center;
+    font-weight: bold;
+}
+
+.oddpanel .input-group {
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.oddpanel button {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.oddpanel input {
+    text-align: center;
+}
+
 .right {
     float: right;
 }

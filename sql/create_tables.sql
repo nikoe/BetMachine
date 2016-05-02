@@ -40,3 +40,14 @@ status text NOT NULL DEFAULt 'NOT_STARTED',
 CONSTRAINT matches_pkey PRIMARY KEY (match_id),
 CONSTRAINT matches_creator_id_fkey FOREIGN KEY (creator_id) REFERENCES users (user_id)
 );
+
+CREATE TABLE odds
+(
+odd_id uuid NOT NULL DEFAULT uuid_generate_v4(),
+match_id uuid NOT NULL,
+name text NOT NULL,
+probability decimal NOT NULL DEFAULT 0.00,
+factor decimal NOT NULL DEFAULT 0.00,
+CONSTRAINT odds_pkey PRIMARY KEY (odd_id),
+CONSTRAINT odds_match_id_fkey FOREIGN KEY (match_id) REFERENCES matches (match_id) ON DELETE CASCADE
+);

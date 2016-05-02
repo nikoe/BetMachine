@@ -5,6 +5,7 @@ var userController = require('../controllers/user-controller.js');
 var authController = require('../controllers/auth-controller.js');
 var transactionController = require('../controllers/transaction-controller.js');
 var matchController = require('../controllers/match-controller.js');
+var oddController = require('../controllers/odd-controller.js');
 
 router.get('/users', [require('../middlewares/validaterequest')], userController.index);
 router.post('/users', userController.create);
@@ -22,6 +23,8 @@ router.get('/matches/dates/:date', matchController.findUpcomingMatchesByDate);
 router.delete('/matches/:matchid', matchController.deleteById);
 router.get('/matches/:matchid', matchController.findById);
 router.put('/matches/:matchid', [require('../middlewares/validaterequest')], matchController.save);
+router.get('/matches/:matchid/odds', oddController.findByMatchId);
+
 router.post('/matches', [require('../middlewares/validaterequest')], matchController.create);
 
 
