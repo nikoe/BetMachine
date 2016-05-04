@@ -2,12 +2,14 @@
  * Created by Niko on 18.4.2016.
  */
 
-app.controller('MatchController', ['$scope', 'MatchService', 'AlertFactory', 'AuthenticationFactory', '$window', '$state',
-    function($scope, MatchService, AlertFactory, AuthenticationFactory, $window, $state) {
+app.controller('MatchController', ['$scope', 'MatchService', 'AlertFactory', 'AuthenticationFactory', '$window', '$state', 'BetslipFactory',
+    function($scope, MatchService, AlertFactory, AuthenticationFactory, $window, $state, BetslipFactory) {
 
         $scope.matches = [];
 
         $scope.dates = [];
+
+        BetslipFactory.getTotalOdds();
 
         $scope.newmatch = {
             name: '',
@@ -110,6 +112,11 @@ app.controller('MatchController', ['$scope', 'MatchService', 'AlertFactory', 'Au
                     AlertFactory.clearAll();
                     AlertFactory.add('danger', error.msg, 'fa fa-ban');
                 });
+        };
+
+        $scope.addMatchToBetSlip = function(matchname, odd) {
+            odd.match_name = matchname;
+            BetslipFactory.addOdd(odd);
         };
 
         $scope.update = function(matchid) {

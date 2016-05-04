@@ -24,7 +24,7 @@
                                </div>
                                 <div class="row">
                                     <div class="col-xs-12 col-md-12">
-                                        <button type="button" class="btn btn-success">
+                                        <button type="button" class="btn btn-success" ng-click="addMatchToBetSlip(match.name, odd)">
                                             {{odd.factor}}
                                         </button>
                                     </div>
@@ -55,7 +55,7 @@
                             </div>
                         </div>
                         <div class="col-md-4 col-xs-4">
-                            <p class="odd right">{{bet.odd}} <i class="fa fa-times delete text-danger" aria-hidden="true"></i></p>
+                            <p class="odd right">{{bet.odd}} <i class="fa fa-times delete text-danger" aria-hidden="true" ng-click="deleteMatch(bet.match_id)"></i></p>
                         </div>
                     </div>
                 </div>
@@ -65,7 +65,7 @@
                             <p>Total odds</p>
                         </div>
                         <div class="col-md-4 col-xs-4">
-                            <p class="odd right">10.00</p>
+                            <p class="odd right">{{totalOdds | number: 2}}</p>
                         </div>
                     </div>
                     <div class="row bet">
@@ -75,7 +75,7 @@
                         <div class="col-md-6 col-xs-4">
                             <div class="input-group right">
                                 <span class="input-group-addon" id="basic-addon1">€</span>
-                                <input type="number" class="form-control" aria-describedby="basic-addon1">
+                                <input type="number" class="form-control" aria-describedby="basic-addon1" ng-model="stake">
                             </div>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
                             <p>Potential win</p>
                         </div>
                         <div class="col-md-4 col-xs-4">
-                            <p class="odd right">100.51</p>
+                            <p class="odd right">{{potentialWin | number:2}}</p>
                         </div>
                     </div>
                     <div class="row pay">

@@ -1,27 +1,24 @@
 /**
  * Created by ekni on 01/05/16.
  */
-app.controller('BetslipController', ['$scope',
-    function ($scope) {
+app.controller('BetslipController', ['$scope', 'BetslipFactory', '$rootScope',
+    function ($scope, BetslipFactory, $rootScope) {
+        $scope.bets = BetslipFactory.getOdds();
+        $scope.totalOdds = BetslipFactory.getTotalOdds();
+        $scope.stake = 0.00;
+        $scope.potentialWin = $scope.stake * $scope.totalOdds;
 
-        $scope.bets = [];
+        $rootScope.$on('betslip:totalodds', function(event, totalOdds) {
+           $scope.totalOdds = totalOdds;
+           $scope.potentialWin = $scope.stake * $scope.totalOdds;
+        });
 
-        var bet1 = {
-            name: 'HIFK - Jokerit',
-            mark: '1',
-            odd: '1.80'
-        }
+        $scope.$watch('stake', function(newstake) {
+            $scope.potentialWin = newstake * $scope.totalOdds;
+        });
 
-        var bet2 = {
-            name: 'Barcelona - Real Madrid',
-            mark: 'X',
-            odd: '4.00'
-        }
-
-        $scope.bets.push(bet1);
-        $scope.bets.push(bet2);
-
-
-
+        $scope.deleteMatch = function(matchid) {
+          BetslipFactory.deleteOdd(matchid);
+        };
     }
 ]);
