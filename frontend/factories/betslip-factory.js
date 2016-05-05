@@ -34,6 +34,18 @@ app.factory('BetslipFactory', ['$window', 'AlertFactory', '$rootScope', function
             }
         },
 
+        deleteAll: function() {
+
+            var keys = Object.keys(this._matches);
+
+            for(i = 0; i < keys.length; i++) {
+                delete this._matches[keys[i]];
+            }
+
+            $rootScope.$broadcast("betslip:totalodds", this.getTotalOdds());
+
+        },
+
         getOdds: function() {
             return this._matches;
         },

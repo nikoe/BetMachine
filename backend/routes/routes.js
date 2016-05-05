@@ -6,6 +6,7 @@ var authController = require('../controllers/auth-controller.js');
 var transactionController = require('../controllers/transaction-controller.js');
 var matchController = require('../controllers/match-controller.js');
 var oddController = require('../controllers/odd-controller.js');
+var betController = require('../controllers/bet-controller.js');
 
 router.get('/users', [require('../middlewares/validaterequest')], userController.index);
 router.post('/users', userController.create);
@@ -27,6 +28,7 @@ router.get('/matches/:matchid/odds', oddController.findByMatchId);
 
 router.post('/matches', [require('../middlewares/validaterequest')], matchController.create);
 
+router.post('/bets', [require('../middlewares/validaterequest')], betController.create);
 
 router.post('/auth', authController.auth);
 

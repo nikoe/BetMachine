@@ -51,3 +51,14 @@ factor decimal NOT NULL DEFAULT 0.00,
 CONSTRAINT odds_pkey PRIMARY KEY (odd_id),
 CONSTRAINT odds_match_id_fkey FOREIGN KEY (match_id) REFERENCES matches (match_id) ON DELETE CASCADE
 );
+
+CREATE TABLE bets
+(
+bet_id uuid NOT NULL DEFAULT uuid_generate_v4(),
+user_id uuid NOT NULL,
+stake decimal NOT NULL,
+created_at timestamp NOT NULL DEFAULT now(),
+status text NOT NULL DEFAULT 'OPEN',
+CONSTRAINT bets_pkey PRIMARY KEY (bet_id),
+CONSTRAINT bets_user_id_fkey FOREIGN KEY (user_id) REFERENCES users (user_id)
+);
